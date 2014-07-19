@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import com.sircular.circle.engine.GameState;
+import com.sircular.circle.engine.Mouse;
 import com.sircular.circle.engine.StateEngine;
 
 public class MainLevel extends GameState {
@@ -37,7 +38,7 @@ public class MainLevel extends GameState {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.width, this.height);
 		g.setColor(Color.WHITE);
-		g.fillOval(x, 100, 12, 12);
+		g.fillOval(Mouse.x, Mouse.y, 12, 12);
 	}
 
 	@Override

@@ -1,12 +1,20 @@
 package com.sircular.circle;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.JFrame;
 
+import com.sircular.circle.engine.Keyboard;
 import com.sircular.circle.engine.MainCanvas;
+import com.sircular.circle.engine.Mouse;
 import com.sircular.circle.engine.StateEngine;
 import com.sircular.circle.levels.MainLevel;
 
-public class MainWindow extends JFrame{
+public class MainWindow extends JFrame implements MouseListener, MouseMotionListener, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private static final int FPS = 60;
@@ -33,8 +41,15 @@ public class MainWindow extends JFrame{
 		MainLevel level = new MainLevel(engine, width, height);
 		engine.setState(level);
 		
+		Mouse.x = 0;
+		Mouse.y = 0;
+		
 		this.setTitle(title);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		this.addKeyListener(this);
+		this.addMouseListener(this);
+		this.addMouseMotionListener(this);
 		
 		canvas = new MainCanvas(width, height);
 		this.add(canvas);
@@ -69,6 +84,47 @@ public class MainWindow extends JFrame{
 			
 			startTime = System.currentTimeMillis();
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Keyboard.setKeyDown(e.getKeyCode(), true);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		Keyboard.setKeyDown(e.getKeyCode(), false);
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		Mouse.setButtonDown(e.getButton(), true);
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		Mouse.setButtonDown(e.getButton(), false);
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		Mouse.x = e.getX();
+		Mouse.y = e.getY();
 	}
 
 }
