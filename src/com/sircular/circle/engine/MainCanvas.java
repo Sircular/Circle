@@ -5,13 +5,12 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JPanel;
+import javax.swing.JComponent;
+import javax.swing.event.MouseInputListener;
 
-public class MainCanvas extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
+public class MainCanvas extends JComponent implements MouseInputListener, KeyListener {
 	
 	private static final long serialVersionUID = 1943500282452199718L;
 	

@@ -42,7 +42,7 @@ public class MainLevel extends GameState {
 			return;
 		
 		g.setColor(Color.WHITE);
-		g.fillOval(Mouse.x, Mouse.y, 12, 12);
+		g.fillOval(Mouse.x-6, Mouse.y-6, 12, 12);
 		
 		if (Mouse.isButtonDown(Mouse.LEFT_BUTTON)) {
 			g.fillRect(0, 0, 30, 30);
