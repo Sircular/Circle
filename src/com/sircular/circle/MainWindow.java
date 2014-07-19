@@ -47,6 +47,8 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		Mouse.y = 0;
 		
 		this.setTitle(title);
+		this.setName(title);
+
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		this.addKeyListener(this);
