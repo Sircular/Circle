@@ -37,8 +37,16 @@ public class MainLevel extends GameState {
 	public void draw(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.width, this.height);
+		
+		if (!engine.hasFocus())
+			return;
+		
 		g.setColor(Color.WHITE);
 		g.fillOval(Mouse.x, Mouse.y, 12, 12);
+		
+		if (Mouse.isButtonDown(Mouse.LEFT_BUTTON)) {
+			g.fillRect(0, 0, 30, 30);
+		}
 	}
 
 	@Override

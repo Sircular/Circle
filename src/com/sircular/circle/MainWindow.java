@@ -1,5 +1,7 @@
 package com.sircular.circle;
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -14,7 +16,7 @@ import com.sircular.circle.engine.Mouse;
 import com.sircular.circle.engine.StateEngine;
 import com.sircular.circle.levels.MainLevel;
 
-public class MainWindow extends JFrame implements MouseListener, MouseMotionListener, KeyListener {
+public class MainWindow extends JFrame implements MouseListener, MouseMotionListener, KeyListener, FocusListener {
 
 	private static final long serialVersionUID = 1L;
 	private static final int FPS = 60;
@@ -50,6 +52,7 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 		this.addKeyListener(this);
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
+		this.addFocusListener(this);
 		
 		canvas = new MainCanvas(width, height);
 		this.add(canvas);
@@ -119,12 +122,25 @@ public class MainWindow extends JFrame implements MouseListener, MouseMotionList
 	public void mouseExited(MouseEvent e) {}
 
 	@Override
-	public void mouseDragged(MouseEvent arg0) {}
+	public void mouseDragged(MouseEvent e) {
+		Mouse.x = e.getX();
+		Mouse.y = e.getY();
+	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		Mouse.x = e.getX();
 		Mouse.y = e.getY();
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		engine.setFocused(true);		
+	}
+
+	@Override
+	public void focusLost(FocusEvent arg0) {
+		engine.setFocused(false);		
 	}
 
 }
