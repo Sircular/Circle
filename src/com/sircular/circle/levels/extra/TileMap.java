@@ -8,10 +8,10 @@ import java.util.List;
 public class TileMap {
 	
 	private final int[][] TILE_MAP = {
-			{0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0},
+			{0, 0, 1, 1, 1},
 			{0, 0, 0, 0, 1},
-			{0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 1},
+			{1, 1, 1, 0, 1},
 			{1, 1, 1, 1, 1}
 	};
 	

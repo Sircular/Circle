@@ -43,7 +43,7 @@ public class MainLevel extends GameState {
 		
 		g.setColor(Color.BLACK);
 		for (Shape rekt : map.getCollisionBoxes()) {
-			g2.fill(rekt);
+			g2.fill(rekt.getBounds2D());
 		}
 		
 		player.draw(g2);
