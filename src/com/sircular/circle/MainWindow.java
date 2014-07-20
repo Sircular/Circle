@@ -54,6 +54,11 @@ public class MainWindow extends JFrame implements FocusListener {
 		this.setVisible(true);
 	}
 	
+	@Override
+	public void dispose() {
+		running = false;
+	}
+	
 	public void loop() {
 		// so we don't run this again
 		if (running)
@@ -64,7 +69,7 @@ public class MainWindow extends JFrame implements FocusListener {
 		long updateTime = startTime;
 		
 		while (running) {
-			engine.update(updateTime-startTime);
+			engine.update(startTime-updateTime);
 			updateTime = System.currentTimeMillis();
 			engine.draw(canvas.getCanvasGraphics());
 			
@@ -80,6 +85,12 @@ public class MainWindow extends JFrame implements FocusListener {
 			
 			startTime = System.currentTimeMillis();
 		}
+		
+		engine.setState(null);
+		engine = null;
+		
+		System.out.println("done!");
+		System.exit(0);
 	}
 
 	@Override

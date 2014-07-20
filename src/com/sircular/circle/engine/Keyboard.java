@@ -11,8 +11,12 @@ public class Keyboard {
 	private static List<InputListener> listeners = new ArrayList<InputListener>();
 	
 	public static void setKeyDown(int keyCode, boolean value) {
-		if (isKeyDown(keyCode) == value)
+		if (isKeyDown(keyCode) == value) {
+			System.out.println("Nope!");
 			return;
+		}
+		
+		System.out.println(keyCode);
 		
 		for (InputListener listener : listeners) {
 			if (value)

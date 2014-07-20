@@ -2,15 +2,19 @@ package com.sircular.circle.levels;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 
 import com.sircular.circle.engine.GameState;
 import com.sircular.circle.engine.Mouse;
 import com.sircular.circle.engine.StateEngine;
+import com.sircular.circle.levels.extra.Player;
+import com.sircular.circle.levels.extra.TileMap;
 
 public class MainLevel extends GameState {
 	
-	private int x = 0;
-	private boolean right = true;
+	TileMap map;
+	Player player;
 
 	public MainLevel(StateEngine engine, int width, int height) {
 		super(engine, width, height);
@@ -19,34 +23,30 @@ public class MainLevel extends GameState {
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
-		
+		map = new TileMap();
+		player = new Player();
 	}
 
 	@Override
 	public void update(long delta) {
-		if (x >= this.width-6)
-			right = false;
-		if (x <= 6)
-			right = true;
-		
-		x += right ? 1 : -1;
+		player.update(delta, map.getCollisionBoxes());
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, this.width, this.height);
-		
-		if (!engine.hasFocus())
+		if (!(g instanceof Graphics2D)) {
 			return;
-		
-		g.setColor(Color.WHITE);
-		g.fillOval(Mouse.x-6, Mouse.y-6, 12, 12);
-		
-		if (Mouse.isButtonDown(Mouse.LEFT_BUTTON)) {
-			g.fillRect(0, 0, 30, 30);
 		}
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(Color.WHITE);
+		g2.fillRect(0, 0, this.width, this.height);
+		
+		g.setColor(Color.BLACK);
+		for (Shape rekt : map.getCollisionBoxes()) {
+			g2.fill(rekt);
+		}
+		
+		player.draw(g2);
 	}
 
 	@Override

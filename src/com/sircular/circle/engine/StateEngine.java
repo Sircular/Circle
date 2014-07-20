@@ -17,7 +17,9 @@ public class StateEngine {
 			this.currentState.cleanup();
 		
 		this.currentState = newState;
-		this.currentState.init();
+		
+		if (this.currentState != null)
+			this.currentState.init();
 	}
 	
 	public void update(long delta) {
