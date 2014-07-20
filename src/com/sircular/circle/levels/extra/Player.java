@@ -27,6 +27,7 @@ public class Player extends Sprite {
 	
 	private float xvel = 2;
 	private float yvel = 2;
+	private float rotation = 0;
 		
 	public Player() {
 		try {
@@ -50,8 +51,8 @@ public class Player extends Sprite {
 		//xvel *= FRICTION;
 		//yvel *= FRICTION;
 		
-		this.x += xvel*((float)delta*DELTA_FACTOR);
-		this.y += yvel*((float)delta*DELTA_FACTOR);
+		this.x += xvel*delta*DELTA_FACTOR;
+		this.y += yvel*delta*DELTA_FACTOR;
 		
 		// check for collisions
 		Area collCircle = new Area(new Ellipse2D.Float(this.x-this.image.getWidth()/2, this.y-this.image.getHeight()/2, this.image.getWidth(), this.image.getHeight()));
@@ -63,27 +64,30 @@ public class Player extends Sprite {
 				Rectangle bounds = box.getBounds();
 				// only do one direction at a time
 				if (Math.max(bounds.getMinY()-this.y, this.y-bounds.getMaxY()) > Math.max(bounds.getMinX()-this.x, this.x-bounds.getMaxX())) {
-					if (this.y < bounds.getMinY()) {
+					if (this.y < bounds.getCenterY()) {
 						this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, -1);
 						this.xvel *= FRICTION;
+						this.rotation += (this.xvel*delta*DELTA_FACTOR)/20f;
 						
 						this.y = bounds.y-(this.image.getHeight()/2);
-					} else if (this.y > bounds.getMaxY()) {
+					} else if (this.y > bounds.getCenterY()) {
 						this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, 1);
 						this.xvel *= FRICTION;
+						this.rotation -= (this.xvel*delta*DELTA_FACTOR)/20f;
 						
 						this.y = (bounds.y+bounds.height)+(this.image.getHeight()/2);
 					}
 				} else {
-					if (this.x < bounds.getMinX()) {
+					if (this.x < bounds.getCenterX()) {
 						this.xvel = MathUtils.setSign(this.xvel*BOUNCINESS, -1);
 						this.yvel *= FRICTION;
+						this.rotation -= (this.yvel*delta*DELTA_FACTOR)/20f;
 						
 						this.x = (float) (bounds.getMinX()-(this.image.getWidth()/2));
-					} else if (this.x > bounds.getMaxX()) {
-						System.out.println("hit");
+					} else if (this.x > bounds.getCenterX()) {
 						this.xvel = MathUtils.setSign(this.xvel*BOUNCINESS, 1);
 						this.yvel *= FRICTION; 
+						this.rotation += (this.yvel*delta*DELTA_FACTOR)/20f;
 						
 						this.x = (float) (bounds.getMaxX()+(this.image.getWidth()/2));
 					}
@@ -97,11 +101,11 @@ public class Player extends Sprite {
 	@Override
 	public void draw(Graphics2D g2) {
 		g2.translate(this.x, this.y);
-		g2.rotate(x/25.0);
+		g2.rotate(rotation);
 		
 		g2.drawImage(image, -this.image.getWidth()/2, -this.image.getHeight()/2, null);
 		
-		g2.rotate(-x/25.0);
+		g2.rotate(rotation);
 		g2.translate(-this.x, -this.y);
 	}
 
