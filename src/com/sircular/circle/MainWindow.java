@@ -2,15 +2,18 @@ package com.sircular.circle;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
+import com.sircular.circle.engine.Keyboard;
 import com.sircular.circle.engine.MainCanvas;
 import com.sircular.circle.engine.Mouse;
 import com.sircular.circle.engine.StateEngine;
 import com.sircular.circle.levels.MainLevel;
 
-public class MainWindow extends JFrame implements FocusListener {
+public class MainWindow extends JFrame implements KeyListener, FocusListener {
 
 	private static final long serialVersionUID = 1L;
 	private static final int FPS = 60;
@@ -44,7 +47,8 @@ public class MainWindow extends JFrame implements FocusListener {
 		this.setName(title);
 
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+		
+		this.addKeyListener(this);
 		this.addFocusListener(this);
 		
 		canvas = new MainCanvas(width, height);
@@ -88,10 +92,22 @@ public class MainWindow extends JFrame implements FocusListener {
 		
 		engine.setState(null);
 		engine = null;
-		
-		System.out.println("done!");
+
 		System.exit(0);
 	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Keyboard.setKeyDown(e.getKeyCode(), true);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		Keyboard.setKeyDown(e.getKeyCode(), false);
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void focusGained(FocusEvent e) {

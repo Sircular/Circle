@@ -2,15 +2,13 @@ package com.sircular.circle.engine;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 import javax.swing.event.MouseInputListener;
 
-public class MainCanvas extends JComponent implements MouseInputListener, KeyListener {
+public class MainCanvas extends JComponent implements MouseInputListener {
 	
 	private static final long serialVersionUID = 1943500282452199718L;
 	
@@ -20,7 +18,6 @@ public class MainCanvas extends JComponent implements MouseInputListener, KeyLis
 		this.setPreferredSize(new Dimension(width, height));
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		
-		this.addKeyListener(this);
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 	}
@@ -33,19 +30,6 @@ public class MainCanvas extends JComponent implements MouseInputListener, KeyLis
 	public void paint(Graphics g) {
 		g.drawImage(image, 0, 0, null);
 	}
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		Keyboard.setKeyDown(e.getKeyCode(), true);
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		Keyboard.setKeyDown(e.getKeyCode(), false);
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
