@@ -28,6 +28,7 @@ public class Player extends Sprite {
 	private float xvel = 2;
 	private float yvel = 2;
 	private float rotation = 0;
+	private float rotvel = 0;
 		
 	public Player() {
 		try {
@@ -48,8 +49,8 @@ public class Player extends Sprite {
 	}
 	
 	private void accelerate(long delta, float xaccel, float yaccel) {
-		this.xvel += deltaAdjust(delta, xaccel);
-		this.yvel += deltaAdjust(delta, yaccel);
+		this.xvel += /*deltaAdjust(delta, */xaccel;//);
+		this.yvel += /*deltaAdjust(delta, */yaccel;//);
 	}
 	
 	public void update(long delta, List<Shape> collisionBoxes) {
@@ -67,6 +68,7 @@ public class Player extends Sprite {
 		
 		this.x += deltaAdjust(delta, xvel);
 		this.y += deltaAdjust(delta, yvel);
+		this.rotation += deltaAdjust(delta, rotvel);
 		
 		// check for collisions
 		Area collCircle = new Area(new Ellipse2D.Float(this.x-this.image.getWidth()/2, this.y-this.image.getHeight()/2, this.image.getWidth(), this.image.getHeight()));
@@ -81,13 +83,13 @@ public class Player extends Sprite {
 					if (this.y < bounds.getCenterY()) {
 						this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, -1);
 						this.xvel *= FRICTION;
-						this.rotation += (this.xvel*delta*DELTA_FACTOR)/20f;
+						this.rotvel = deltaAdjust(delta, this.xvel)/20f;
 						
 						this.y = bounds.y-(this.image.getHeight()/2);
 					} else if (this.y > bounds.getCenterY()) {
 						this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, 1);
 						this.xvel *= FRICTION;
-						this.rotation -= (this.xvel*delta*DELTA_FACTOR)/20f;
+						this.rotvel = -deltaAdjust(delta, this.xvel)/20f;
 						
 						this.y = (bounds.y+bounds.height)+(this.image.getHeight()/2);
 					}
@@ -95,18 +97,17 @@ public class Player extends Sprite {
 					if (this.x < bounds.getCenterX()) {
 						this.xvel = MathUtils.setSign(this.xvel*BOUNCINESS, -1);
 						this.yvel *= FRICTION;
-						this.rotation -= (this.yvel*delta*DELTA_FACTOR)/20f;
+						this.rotvel = -deltaAdjust(delta, this.yvel)/20f;
 						
 						this.x = (float) (bounds.getMinX()-(this.image.getWidth()/2));
 					} else if (this.x > bounds.getCenterX()) {
 						this.xvel = MathUtils.setSign(this.xvel*BOUNCINESS, 1);
 						this.yvel *= FRICTION; 
-						this.rotation += (this.yvel*delta*DELTA_FACTOR)/20f;
+						this.rotvel = deltaAdjust(delta, this.yvel)/20f;
 						
 						this.x = (float) (bounds.getMaxX()+(this.image.getWidth()/2));
 					}
 				}
-				//break;
 			}
 				
 		}
