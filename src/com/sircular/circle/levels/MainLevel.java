@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 
 import com.sircular.circle.engine.GameState;
-import com.sircular.circle.engine.Mouse;
 import com.sircular.circle.engine.StateEngine;
 import com.sircular.circle.levels.extra.Player;
 import com.sircular.circle.levels.extra.TileMap;

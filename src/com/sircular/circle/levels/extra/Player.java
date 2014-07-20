@@ -21,7 +21,7 @@ public class Player extends Sprite {
 	
 	private final float DELTA_FACTOR = 0.05f; // arbitrary; used for variable frame rate; tweak to change speed
 	
-	private final float GRAVITY = 0.1f;
+	private final float GRAVITY = 0.2f;
 	private final float FRICTION = 0.99f;
 	private final float BOUNCINESS = 0.6f;
 	
@@ -38,21 +38,35 @@ public class Player extends Sprite {
 		}
 	}
 	
+	private void moveTo(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	private float deltaAdjust(long delta, float value) {
+		return value*delta*DELTA_FACTOR;
+	}
+	
+	private void accelerate(long delta, float xaccel, float yaccel) {
+		this.xvel += deltaAdjust(delta, xaccel);
+		this.yvel += deltaAdjust(delta, yaccel);
+	}
+	
 	public void update(long delta, List<Shape> collisionBoxes) {
-		yvel += GRAVITY;
+		accelerate(delta, 0, GRAVITY);
 		
 		if (Keyboard.isKeyDown(KeyEvent.VK_A))
-			xvel -= 0.1;
+			accelerate(delta, -0.1f, 0);
 		if (Keyboard.isKeyDown(KeyEvent.VK_D))
-			xvel += 0.1;
+			accelerate(delta, 0.1f, 0);
 		if (Keyboard.isKeyDown(KeyEvent.VK_W))
-			yvel -= 0.2;
+			accelerate(delta, 0, -0.35f);
 		
 		//xvel *= FRICTION;
 		//yvel *= FRICTION;
 		
-		this.x += xvel*delta*DELTA_FACTOR;
-		this.y += yvel*delta*DELTA_FACTOR;
+		this.x += deltaAdjust(delta, xvel);
+		this.y += deltaAdjust(delta, yvel);
 		
 		// check for collisions
 		Area collCircle = new Area(new Ellipse2D.Float(this.x-this.image.getWidth()/2, this.y-this.image.getHeight()/2, this.image.getWidth(), this.image.getHeight()));
