@@ -1,6 +1,7 @@
 package com.sircular.circle.levels.extra;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.KeyEvent;
@@ -57,7 +58,7 @@ public class Player extends Sprite {
 		this.yvel += /*deltaAdjust(delta, */yaccel;//);
 	}
 	
-	public void update(long delta, List<Rectangle> tileBoxes) {
+	public void update(long delta, List<Rectangle> tileBoxes, Camera cam) {
 		accelerate(delta, 0, GRAVITY);
 		
 		if (Keyboard.isKeyDown(KeyEvent.VK_A))
@@ -117,19 +118,21 @@ public class Player extends Sprite {
 					}
 				}
 			}
-				
+			// move the camera
+			cam.centerTowards((int)this.x, (int)this.y, 0.1f);
 		}
 	}
 	
-	@Override
-	public void draw(Graphics2D g2) {
-		g2.translate(this.x, this.y);
+	public void draw(Graphics2D g2, Camera cam) {
+		Point frame = cam.getFramePosition();
+		
+		g2.translate(this.x-frame.x, this.y-frame.y);
 		g2.rotate(rotation);
 		
 		g2.drawImage(image, -this.image.getWidth()/2, -this.image.getHeight()/2, null);
 		
 		g2.rotate(rotation);
-		g2.translate(-this.x, -this.y);
+		g2.translate(-this.x+frame.x, -this.y+frame.y);
 	}
 
 }

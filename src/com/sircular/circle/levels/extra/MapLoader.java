@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 
 public class MapLoader {
 	
+	private static final int TILE_SIZE = 32; // change this to make tiles bigger or smaller
+	
 	private static final String LEVEL_PATH = "/com/sircular/circle/data/assets/levels/";
 	private static final String LEVEL_EXT = ".png";
 	
@@ -38,7 +40,7 @@ public class MapLoader {
 				}
 			}
 			
-			return new TileMap(mapData);
+			return new TileMap(mapData, TILE_SIZE);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
