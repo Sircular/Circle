@@ -57,7 +57,7 @@ public class Player extends Sprite {
 		this.yvel += /*deltaAdjust(delta, */yaccel;//);
 	}
 	
-	public void update(long delta, List<Shape> collisionBoxes) {
+	public void update(long delta, List<Rectangle> tileBoxes) {
 		accelerate(delta, 0, GRAVITY);
 		
 		if (Keyboard.isKeyDown(KeyEvent.VK_A))
@@ -78,7 +78,7 @@ public class Player extends Sprite {
 		
 		// check for collisions
 		Area collCircle = new Area(new Ellipse2D.Float(this.x-this.image.getWidth()/2, this.y-this.image.getHeight()/2, this.image.getWidth(), this.image.getHeight()));
-		for (Shape box : collisionBoxes) {
+		for (Shape box : tileBoxes) {
 			Area boxArea = new Area(box);
 			Area circleArea = (Area) collCircle.clone();
 			circleArea.intersect(boxArea);

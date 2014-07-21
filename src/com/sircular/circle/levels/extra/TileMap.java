@@ -3,13 +3,15 @@ package com.sircular.circle.levels.extra;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class TileMap {
 	
 	private int[][] TILE_MAP;
 	
-	private List<Shape> collisionTiles = new ArrayList<Shape>();
+	private List<Rectangle> collisionTiles = new ArrayList<Rectangle>();
 	
 	public TileMap(int[][] mapData) {
 		this.TILE_MAP = mapData;
@@ -22,6 +24,43 @@ public class TileMap {
 				}
 			}
 		}
+		
+		// reduce the number of tiles
+		ListIterator<Rectangle> it = collisionTiles.listIterator();
+		
+		// merge horizontally
+		while (it.hasNext()) {
+			Rectangle t1 = it.next();
+			// weird and confusing, but it works
+			while (it.hasNext()) {
+				Rectangle t2 = it.next();
+				if (t1.getMaxX() >= t2.getMinX() && t1.y == t2.y && t1.height == t1.height) {
+					it.remove();
+					t1.add(t2);
+					continue;
+				}
+				it.previous(); // in special cases
+				break;
+			}
+		}
+		
+		it = collisionTiles.listIterator();
+		// merge vertically
+		// we can only use one iterator, requires weird hackery
+		while (it.hasNext()) {
+			int index = it.nextIndex()+1;
+			Rectangle t1 = it.next();
+			
+			while (it.hasNext()) {
+				Rectangle t2 = it.next();
+				if (t1.getMaxY() >= t2.getMinY() && t1.x == t2.x && t1.width == t2.width) {
+					it.remove();
+					t1.add(t2);
+				}
+			}
+			// reset the iterator
+			it = collisionTiles.listIterator(index);
+		}
 	}
 	
 	public int getTileAt(int x, int y) {
@@ -30,7 +69,7 @@ public class TileMap {
 		return TILE_MAP[y][x];
 	}
 	
-	public List<Shape> getCollisionBoxes() {
+	public List<Rectangle> getCollisionBoxes() {
 		return collisionTiles;
 	}
 	

@@ -31,7 +31,6 @@ public class MapLoader {
 				int y = i/rawImage.getWidth();
 				
 				for (int j = 0; j < COLORS.length; j++) {
-					System.out.println(imgData[i]);
 					if (imgData[i] == COLORS[j]) {
 						mapData[y][x] = j	;
 						break;

@@ -3,6 +3,7 @@ package com.sircular.circle.levels;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 
 import com.sircular.circle.engine.GameState;
 import com.sircular.circle.engine.StateEngine;
@@ -41,14 +42,20 @@ public class MainLevel extends GameState {
 		g2.setColor(Color.WHITE);
 		g2.fillRect(0, 0, this.width, this.height);
 		
-		g.setColor(Color.BLACK);
+		g2.setColor(Color.BLACK);
 		
 		for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
 				if (map.getTileAt(x, y) > 0) {
-					g.fillRect(x*32, y*32, 32, 32);
+					g2.fillRect(x*32, y*32, 32, 32);
 				}
 			}
+		}
+		
+		g2.setColor(Color.RED);
+		
+		for (Shape box : map.getCollisionBoxes()) {
+			g2.draw(box);
 		}
 		
 		player.draw(g2);
