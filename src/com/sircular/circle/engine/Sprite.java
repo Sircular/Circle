@@ -1,6 +1,9 @@
 package com.sircular.circle.engine;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 
 public class Sprite {
@@ -24,6 +27,13 @@ public class Sprite {
 		this.x = x;
 		this.y = y;
 		this.image = image;
+	}
+	
+	public Area getCollisionShape() {
+		int width = this.image.getWidth();
+		int height = this.image.getHeight();
+		// JAVA AWT, Y U NEED INTS??
+		return new Area(new Rectangle((int)this.x-(width/2), (int)this.y-(height/2), width, height));
 	}
 	
 	public void draw(Graphics2D g2) {

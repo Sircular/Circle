@@ -78,7 +78,7 @@ public class Player extends Sprite {
 		this.rotation += deltaAdjust(delta, rotvel);
 		
 		// check for collisions
-		Area collCircle = new Area(new Ellipse2D.Float(this.x-this.image.getWidth()/2, this.y-this.image.getHeight()/2, this.image.getWidth(), this.image.getHeight()));
+		Area collCircle = getCollisionShape();
 		for (Shape box : tileBoxes) {
 			Area boxArea = new Area(box);
 			Area circleArea = (Area) collCircle.clone();
@@ -121,6 +121,10 @@ public class Player extends Sprite {
 			// move the camera
 			cam.centerTowards((int)this.x, (int)this.y, 0.1f);
 		}
+	}
+	
+	public Area getCollisionShape() {
+		return new Area(new Ellipse2D.Float(this.x-this.image.getWidth()/2, this.y-this.image.getHeight()/2, this.image.getWidth(), this.image.getHeight()));
 	}
 	
 	public void draw(Graphics2D g2, Camera cam) {
