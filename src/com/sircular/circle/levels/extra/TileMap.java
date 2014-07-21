@@ -31,7 +31,7 @@ public class TileMap {
 		// merge vertically and horizontally
 		// we can only use one iterator, requires weird hackery
 		while (it.hasNext()) {
-			int index = it.nextIndex()+1;
+			int index = it.nextIndex();
 			Rectangle t1 = it.next();
 			
 			while (it.hasNext()) {
@@ -43,7 +43,8 @@ public class TileMap {
 				}
 			}
 			// reset the iterator
-			it = collisionTiles.listIterator(index);
+			while(it.previousIndex() > index)
+				it.previous();
 		}
 	}
 	

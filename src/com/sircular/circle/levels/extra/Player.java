@@ -23,7 +23,7 @@ public class Player extends Sprite {
 	
 	private final float GRAVITY = 0.2f;
 	private final float FRICTION = 0.99f;
-	private final float BOUNCINESS = 0.6f;
+	private final float BOUNCINESS = 0.2f;
 	
 	private float xvel = 2;
 	private float yvel = 2;
