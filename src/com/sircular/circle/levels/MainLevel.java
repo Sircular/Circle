@@ -3,7 +3,6 @@ package com.sircular.circle.levels;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 
 import com.sircular.circle.engine.GameState;
 import com.sircular.circle.engine.StateEngine;

@@ -29,8 +29,12 @@ public class Player extends Sprite {
 	private float yvel = 2;
 	private float rotation = 0;
 	private float rotvel = 0;
+	
+	private boolean canJump;
 		
 	public Player() {
+		canJump = false;
+		
 		try {
 			this.image = ImageIO.read(this.getClass().getResource(IMG_PATH));
 		} catch (IOException e) {
@@ -60,8 +64,10 @@ public class Player extends Sprite {
 			accelerate(delta, -0.1f, 0);
 		if (Keyboard.isKeyDown(KeyEvent.VK_D))
 			accelerate(delta, 0.1f, 0);
-		if (Keyboard.isKeyDown(KeyEvent.VK_W))
-			accelerate(delta, 0, -0.35f);
+		if (Keyboard.isKeyDown(KeyEvent.VK_W) && canJump)
+			yvel = -5; // we don't want them to be bounce higher each time
+		
+		canJump = false;
 		
 		//xvel *= FRICTION;
 		//yvel *= FRICTION;
@@ -86,6 +92,8 @@ public class Player extends Sprite {
 						this.rotvel = deltaAdjust(delta, this.xvel)/20f;
 						
 						this.y = (float) (bounds.getMinY()-(this.image.getHeight()/2));
+						// we can jump, because we're on the floor
+						canJump = true;
 					} else if (this.y > bounds.getCenterY()) {
 						this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, 1);
 						this.xvel *= FRICTION;
