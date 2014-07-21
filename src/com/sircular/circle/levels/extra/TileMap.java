@@ -7,17 +7,13 @@ import java.util.List;
 
 public class TileMap {
 	
-	private final int[][] TILE_MAP = {
-			{0, 0, 1, 1, 1},
-			{0, 0, 0, 0, 1},
-			{0, 0, 0, 0, 1},
-			{1, 1, 1, 0, 1},
-			{1, 1, 1, 1, 1}
-	};
+	private int[][] TILE_MAP;
 	
 	private List<Shape> collisionTiles = new ArrayList<Shape>();
 	
-	public TileMap() {
+	public TileMap(int[][] mapData) {
+		this.TILE_MAP = mapData;
+		
 		for (int y = 0; y < TILE_MAP.length; y++) {
 			for (int x = 0; x < TILE_MAP[0].length; x++) {
 				if (getTileAt(x, y) > 0 && !(getTileAt(x-1, y) > 0 && getTileAt(x+1, y) > 0 &&

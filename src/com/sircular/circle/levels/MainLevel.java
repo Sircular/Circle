@@ -7,6 +7,7 @@ import java.awt.Shape;
 
 import com.sircular.circle.engine.GameState;
 import com.sircular.circle.engine.StateEngine;
+import com.sircular.circle.levels.extra.MapLoader;
 import com.sircular.circle.levels.extra.Player;
 import com.sircular.circle.levels.extra.TileMap;
 
@@ -22,8 +23,9 @@ public class MainLevel extends GameState {
 
 	@Override
 	public void init() {
-		map = new TileMap();
+		map = MapLoader.loadMap("level_1");
 		player = new Player();
+		player.moveTo(300, 100);
 	}
 
 	@Override
@@ -41,8 +43,13 @@ public class MainLevel extends GameState {
 		g2.fillRect(0, 0, this.width, this.height);
 		
 		g.setColor(Color.BLACK);
-		for (Shape rekt : map.getCollisionBoxes()) {
-			g2.fill(rekt.getBounds2D());
+		
+		for (int x = 0; x < map.getWidth(); x++) {
+			for (int y = 0; y < map.getHeight(); y++) {
+				if (map.getTileAt(x, y) > 0) {
+					g.fillRect(x*32, y*32, 32, 32);
+				}
+			}
 		}
 		
 		player.draw(g2);

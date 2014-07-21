@@ -39,7 +39,7 @@ public class Player extends Sprite {
 		}
 	}
 	
-	private void moveTo(int x, int y) {
+	public void moveTo(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -85,13 +85,13 @@ public class Player extends Sprite {
 						this.xvel *= FRICTION;
 						this.rotvel = deltaAdjust(delta, this.xvel)/20f;
 						
-						this.y = bounds.y-(this.image.getHeight()/2);
+						this.y = (float) (bounds.getMinY()-(this.image.getHeight()/2));
 					} else if (this.y > bounds.getCenterY()) {
 						this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, 1);
 						this.xvel *= FRICTION;
 						this.rotvel = -deltaAdjust(delta, this.xvel)/20f;
 						
-						this.y = (bounds.y+bounds.height)+(this.image.getHeight()/2);
+						this.y =  (float) (bounds.getMaxY()+(this.image.getHeight()/2));
 					}
 				} else {
 					if (this.x < bounds.getCenterX()) {
