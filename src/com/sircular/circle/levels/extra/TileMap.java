@@ -14,11 +14,12 @@ public class TileMap {
 	public TileMap(int[][] mapData) {
 		this.TILE_MAP = mapData;
 		
+		// generate collision tiles
 		for (int y = 0; y < TILE_MAP.length; y++) {
 			for (int x = 0; x < TILE_MAP[0].length; x++) {
 				// if we're solid and not surrounded by solid tiles
-				if (getTileAt(x, y) > 0 && !(getTileAt(x-1, y) > 0 && getTileAt(x+1, y) > 0 &&
-						getTileAt(x, y-1) > 0 && getTileAt(x, y+1) > 0)) {
+				if (getTileAt(x, y) > 0 && !((getTileAt(x-1, y) > 0 || x == 0) && (getTileAt(x+1, y) > 0 || x == TILE_MAP[0].length-1) &&
+						(getTileAt(x, y-1) > 0 || y == 0) && (getTileAt(x, y+1) > 0 || y == TILE_MAP.length-1))) {
 					collisionTiles.add(new Rectangle(x*32, y*32, 32, 32));
 				}
 			}
