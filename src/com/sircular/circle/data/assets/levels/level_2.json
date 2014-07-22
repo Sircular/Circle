@@ -1,0 +1,7 @@
+{ "entities" : [
+	{
+	"type":"platform",
+	"tile_x":12,
+	"tile_y":6
+	}
+]}

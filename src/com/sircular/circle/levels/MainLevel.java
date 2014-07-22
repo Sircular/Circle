@@ -36,8 +36,8 @@ public class MainLevel extends GameState {
 		map = MapLoader.loadMap("level_2");
 		player = new Player();
 		player.moveTo(300, 100);
-		entities = new ArrayList<Collidable>();
-		entities.add(new TestPlatform(640, 200));
+		entities = MapLoader.loadMapEntities("level_2");
+		
 		camera = new Camera(this.width, this.height, new Rectangle(0, 0, map.getWidth()*map.getTileSize(), map.getHeight()*map.getTileSize()));
 	}
 
