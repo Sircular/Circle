@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +43,10 @@ public class MainLevel extends GameState {
 
 	@Override
 	public void update(long delta) {
+		for (Collidable entity : entities) {
+			entity.update(delta, map.getCollisionBoxes(), entities);
+		}
+		
 		player.update(delta, map.getCollisionBoxes(), entities, camera);
 	}
 
@@ -70,14 +73,6 @@ public class MainLevel extends GameState {
 					g2.fillRect((x*tileSize)-frame.x, (y*tileSize)-frame.y, tileSize, tileSize);
 				}
 			}
-		}
-		
-		g2.setColor(Color.RED);
-		
-		for (Shape box : map.getCollisionBoxes()) {
-			Rectangle b = box.getBounds();
-			b.setLocation(b.x-frame.x, b.y-frame.y);
-			g2.draw(b);
 		}
 		
 		player.draw(g2, camera);

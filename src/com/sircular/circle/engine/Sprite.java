@@ -8,7 +8,7 @@ import com.sircular.circle.levels.extra.Camera;
 
 public class Sprite {
 	
-	private final static float DELTA_FACTOR = 0.05f;
+	protected final float DELTA_FACTOR = 0.05f;
 	
 	public float x, y;
 	protected float xvel, yvel;

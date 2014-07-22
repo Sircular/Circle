@@ -8,24 +8,34 @@ import com.sircular.circle.levels.extra.Collidable;
 
 public class TestPlatform extends Collidable {
 	
+	private boolean rising = false;
+	
 	public TestPlatform(int x, int y) {
 		this.x = x;
 		this.y = y;
 		
-		this.image = new BufferedImage(320, 16, BufferedImage.TYPE_INT_RGB);
+		this.image = new BufferedImage(320, 32, BufferedImage.TYPE_INT_RGB);
 	}
 
 	@Override
 	public boolean onCollide(Side side) {
-		// TODO Auto-generated method stub
-		return side == Side.TOP;
+		if (side == Side.TOP) {
+			rising = true;
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public void update(long delta, List<Rectangle> tiles,
 			List<Collidable> entities) {
-		// TODO Auto-generated method stub
+		if (rising && y > 120)
+			y--;
 		
+	}
+	@Override
+	public boolean allowsInsideCollision() {
+		return false;
 	}
 	
 	

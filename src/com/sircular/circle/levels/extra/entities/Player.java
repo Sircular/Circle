@@ -59,7 +59,7 @@ public class Player extends Collidable {
 		if (Keyboard.isKeyDown(KeyEvent.VK_D))
 			accelerate(delta, 0.1f, 0);
 		if (Keyboard.isKeyDown(KeyEvent.VK_W) && canJump)
-			yvel = -7; // we don't want them to be bounce higher each time
+			yvel = -7;
 		
 		canJump = false;
 		
@@ -75,13 +75,13 @@ public class Player extends Collidable {
 		// tile collisions
 		for (Rectangle box : tiles) {
 			Area boxArea = new Area(box);
-			Side side = this.hasCollided(boxArea);
+			Side side = this.hasCollided(boxArea, true);
 			handleCollisions(delta, new Area(box), side);
 		}
 		
 		for (Collidable entity : entities) {
 			Area colArea = entity.getCollisionShape();
-			Side side = this.hasCollided(colArea);
+			Side side = this.hasCollided(colArea, entity.allowsInsideCollision());
 			if (entity.onCollide(side))
 				handleCollisions(delta, colArea, side);
 		}
