@@ -1,14 +1,17 @@
 package com.sircular.circle.engine;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.Area;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+import com.sircular.circle.levels.extra.Camera;
 
 public class Sprite {
 	
+	private final static float DELTA_FACTOR = 0.05f;
+	
 	public float x, y;
+	protected float xvel, yvel;
 	protected BufferedImage image;
 	
 	public Sprite() {
@@ -29,15 +32,27 @@ public class Sprite {
 		this.image = image;
 	}
 	
-	public Area getCollisionShape() {
-		int width = this.image.getWidth();
-		int height = this.image.getHeight();
-		// JAVA AWT, Y U NEED INTS??
-		return new Area(new Rectangle((int)this.x-(width/2), (int)this.y-(height/2), width, height));
+	public void moveTo(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 	
-	public void draw(Graphics2D g2) {
-		g2.drawImage(image, (int)this.x-(this.image.getWidth()/2), (int)this.y-(this.image.getHeight()/2), null);
+	protected float deltaAdjust(long delta, float value) {
+		return value*delta*DELTA_FACTOR;
+	}
+	
+	protected void accelerate(long delta, float xaccel, float yaccel) {
+		this.xvel += /*deltaAdjust(delta, */xaccel;//);
+		this.yvel += /*deltaAdjust(delta, */yaccel;//);
+	}
+	
+	public void update(int delta) {
+		
+	}
+	
+	public void draw(Graphics2D g2, Camera cam) {
+		Point frame = cam.getFramePosition();
+		g2.drawImage(image, (int)this.x-(this.image.getWidth()/2)-frame.x, (int)this.y-(this.image.getHeight()/2)-frame.y, null);
 	}
 	
 	

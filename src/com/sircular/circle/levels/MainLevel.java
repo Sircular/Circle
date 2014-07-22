@@ -6,19 +6,26 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sircular.circle.engine.GameState;
+import com.sircular.circle.engine.Sprite;
 import com.sircular.circle.engine.StateEngine;
 import com.sircular.circle.levels.extra.Camera;
+import com.sircular.circle.levels.extra.Collidable;
 import com.sircular.circle.levels.extra.MapLoader;
-import com.sircular.circle.levels.extra.Player;
 import com.sircular.circle.levels.extra.TileMap;
+import com.sircular.circle.levels.extra.entities.Player;
+import com.sircular.circle.levels.extra.entities.TestPlatform;
 
 public class MainLevel extends GameState {
 	
 	TileMap map;
 	Player player;
 	Camera camera;
+	
+	List<Collidable> entities;
 
 	public MainLevel(StateEngine engine, int width, int height) {
 		super(engine, width, height);
@@ -30,12 +37,14 @@ public class MainLevel extends GameState {
 		map = MapLoader.loadMap("level_2");
 		player = new Player();
 		player.moveTo(300, 100);
+		entities = new ArrayList<Collidable>();
+		entities.add(new TestPlatform(640, 200));
 		camera = new Camera(this.width, this.height, new Rectangle(0, 0, map.getWidth()*map.getTileSize(), map.getHeight()*map.getTileSize()));
 	}
 
 	@Override
 	public void update(long delta) {
-		player.update(delta, map.getCollisionBoxes(), camera);
+		player.update(delta, map.getCollisionBoxes(), entities, camera);
 	}
 
 	@Override
@@ -72,6 +81,10 @@ public class MainLevel extends GameState {
 		}
 		
 		player.draw(g2, camera);
+		
+		for (Sprite sprite : entities) {
+			sprite.draw(g2, camera);
+		}
 	}
 
 	@Override
