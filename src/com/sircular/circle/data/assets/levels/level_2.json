@@ -3,5 +3,11 @@
 	"type":"platform",
 	"tile_x":12,
 	"tile_y":6
+	}, 
+	{
+	"type":"sign",
+	"tile_x":1,
+	"tile_y":13,
+	"text":"Herp derp."
 	}
 ]}

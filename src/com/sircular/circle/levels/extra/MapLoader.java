@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.sircular.circle.levels.extra.entities.Sign;
 import com.sircular.circle.levels.extra.entities.TestPlatform;
 
 public class MapLoader {
@@ -94,9 +95,9 @@ public class MapLoader {
 				
 				// get all the commoon settings
 				if (obj.containsKey("tile_x"))
-					objX = (int) (TILE_SIZE*((Long) obj.get("tile_x")));
+					objX = (int) (TILE_SIZE*((Long) obj.get("tile_x")+0.5));
 				if (obj.containsKey("tile_y"))
-					objY = (int) (TILE_SIZE*((Long) obj.get("tile_y")));
+					objY = (int) (TILE_SIZE*((Long) obj.get("tile_y")+0.5));
 				
 				if (obj.containsKey("pixel_x"))
 					objX += (Long) obj.get("pixel_x");
@@ -118,7 +119,9 @@ public class MapLoader {
 				
 				switch (type) {
 				case sign:
-					
+					String text = (String)obj.get("text");
+					Sign sign = new Sign(objX, objY, text);
+					entities.add(sign);
 					break;
 				case platform:
 					TestPlatform platform = new TestPlatform(objX, objY);

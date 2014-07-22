@@ -4,9 +4,10 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import com.sircular.circle.levels.extra.ActiveCollidable;
 import com.sircular.circle.levels.extra.Collidable;
 
-public class TestPlatform extends Collidable {
+public class TestPlatform extends ActiveCollidable {
 	
 	private boolean rising = false;
 	

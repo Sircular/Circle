@@ -1,11 +1,13 @@
 package com.sircular.circle.levels.extra.entities;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
@@ -13,6 +15,8 @@ import javax.imageio.ImageIO;
 
 import com.sircular.circle.engine.Keyboard;
 import com.sircular.circle.engine.MathUtils;
+import com.sircular.circle.engine.SlicedImage;
+import com.sircular.circle.engine.TextRenderer;
 import com.sircular.circle.levels.extra.Camera;
 import com.sircular.circle.levels.extra.Collidable;
 
@@ -29,8 +33,19 @@ public class Player extends Collidable {
 	private float rotvel = 0;
 	
 	private boolean canJump;
+	
+	private String signDisplay;
+	
+	private SlicedImage signBg;
 		
 	public Player() {
+		try {
+			signBg = new SlicedImage(ImageIO.read(this.getClass().getResource("/com/sircular/circle/data/assets/img/sign_bg.png")),
+					32, 32, 64, 64);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		canJump = false;
 		
 		try {
@@ -42,16 +57,10 @@ public class Player extends Collidable {
 		this.x = 0;
 		this.y = 0;
 	}
-	
+
 	public void update(long delta, List<Rectangle> tiles, List<Collidable> entities, Camera cam) {
-		// run Collidable update
-		this.update(delta,tiles, entities);
-		// move the camera
-		cam.centerTowards((int)this.x, (int)this.y, 0.1f);
-	}
-	
-	@Override
-	public void update(long delta, List<Rectangle> tiles, List<Collidable> entities) {
+		signDisplay = null;
+		
 		accelerate(delta, 0, GRAVITY);
 		
 		if (Keyboard.isKeyDown(KeyEvent.VK_A))
@@ -76,18 +85,33 @@ public class Player extends Collidable {
 		for (Rectangle box : tiles) {
 			Area boxArea = new Area(box);
 			Side side = this.hasCollided(boxArea, true);
-			handleCollisions(delta, new Area(box), side);
+			handleCollisions(delta, boxArea, side);
 		}
 		
 		for (Collidable entity : entities) {
 			Area colArea = entity.getCollisionShape();
 			Side side = this.hasCollided(colArea, entity.allowsInsideCollision());
-			if (entity.onCollide(side))
-				handleCollisions(delta, colArea, side);
+			if (entity.onCollide(side)) {
+				if (entity.isSolid())
+					handleCollisions(delta, colArea, side);
+				// special logic here
+				
+				// SIGNS
+				if (entity instanceof Sign) {
+					Sign sign = (Sign)entity;
+					signDisplay = sign.getText();
+				}
+			}
 		}
+		
+		// move the camera
+		cam.centerTowards((int)this.x, (int)this.y, 0.1f);
 	}
 	
 	private void handleCollisions(long delta, Area area, Side side) {
+		
+		if (side == null)
+			return;
 		
 		Rectangle box = area.getBounds();
 		
@@ -134,6 +158,12 @@ public class Player extends Collidable {
 		
 		g2.rotate(-rotation);
 		g2.translate(-this.x+frame.x, -this.y+frame.y);
+		
+		if (signDisplay != null) {
+			BufferedImage textImg = TextRenderer.renderText(signDisplay, Color.white);
+			g2.drawImage(signBg.render(textImg.getWidth(), textImg.getHeight()), 64, 64, null);
+			g2.drawImage(textImg, 96, 96, null);
+		}
 	}
 
 }

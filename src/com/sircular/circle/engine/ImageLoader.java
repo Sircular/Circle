@@ -16,7 +16,7 @@ public class ImageLoader {
 			for (int y = 0; y < vertTileCount; y++) {
 				for (int x = 0; x < horizTileCount; x++) {
 					BufferedImage tile = raw.getSubimage(x*tileWidth, y*tileHeight, tileWidth, tileHeight);
-					tiles[x+(y*tileWidth)] = tile;
+					tiles[x+(y*horizTileCount)] = tile;
 				}
 			}
 			return tiles;

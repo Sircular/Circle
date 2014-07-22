@@ -5,18 +5,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.sircular.circle.engine.GameState;
 import com.sircular.circle.engine.Sprite;
 import com.sircular.circle.engine.StateEngine;
+import com.sircular.circle.engine.TextRenderer;
+import com.sircular.circle.levels.extra.ActiveCollidable;
 import com.sircular.circle.levels.extra.Camera;
 import com.sircular.circle.levels.extra.Collidable;
 import com.sircular.circle.levels.extra.MapLoader;
 import com.sircular.circle.levels.extra.TileMap;
 import com.sircular.circle.levels.extra.entities.Player;
-import com.sircular.circle.levels.extra.entities.TestPlatform;
 
 public class MainLevel extends GameState {
 	
@@ -33,9 +33,11 @@ public class MainLevel extends GameState {
 
 	@Override
 	public void init() {
+		TextRenderer.loadFont(24, 28, "/com/sircular/circle/data/assets/img/text_large.png");
+		
 		map = MapLoader.loadMap("level_2");
 		player = new Player();
-		player.moveTo(300, 100);
+		player.moveTo(48, 400);
 		entities = MapLoader.loadMapEntities("level_2");
 		
 		camera = new Camera(this.width, this.height, new Rectangle(0, 0, map.getWidth()*map.getTileSize(), map.getHeight()*map.getTileSize()));
@@ -44,7 +46,8 @@ public class MainLevel extends GameState {
 	@Override
 	public void update(long delta) {
 		for (Collidable entity : entities) {
-			entity.update(delta, map.getCollisionBoxes(), entities);
+			if (entity instanceof ActiveCollidable)
+				((ActiveCollidable)entity).update(delta, map.getCollisionBoxes(), entities);
 		}
 		
 		player.update(delta, map.getCollisionBoxes(), entities, camera);
@@ -62,7 +65,7 @@ public class MainLevel extends GameState {
 		// "global" camera position
 		Point frame = camera.getFramePosition();
 		
-		g2.setColor(Color.WHITE);
+		g2.setColor(Color.gray);
 		g2.fillRect(0, 0, this.width, this.height);
 		
 		g2.setColor(Color.BLACK);
@@ -75,11 +78,11 @@ public class MainLevel extends GameState {
 			}
 		}
 		
-		player.draw(g2, camera);
-		
 		for (Sprite sprite : entities) {
 			sprite.draw(g2, camera);
 		}
+		
+		player.draw(g2, camera);
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package com.sircular.circle.levels.extra;
 
 import java.awt.Rectangle;
 import java.awt.geom.Area;
-import java.util.List;
 
 import com.sircular.circle.engine.Sprite;
 
@@ -17,7 +16,10 @@ public abstract class Collidable extends Sprite {
 		RIGHT
 	}
 	
-	public abstract void update(long delta, List<Rectangle> tiles, List<Collidable> entities);
+	public void update(long delta) {
+		
+	}
+
 	
 	public Area getCollisionShape() {
 		int width = this.image.getWidth();
@@ -35,19 +37,19 @@ public abstract class Collidable extends Sprite {
 			float distX = (float) Math.max(bounds.getMinX()-this.x, this.x-bounds.getMaxX());
 			float distY = (float) Math.max(bounds.getMinY()-this.y, this.y-bounds.getMaxY());
 			if (distY > distX) {
-				boolean bottomCondition = inside ? this.y > bounds.getCenterY() : this.y > bounds.getMaxY();
-				boolean topCondition = inside ? this.y < bounds.getCenterY() : this.y < bounds.getMinY();
-				if (bottomCondition && this.yvel < 0) {
+				boolean bottomCondition = inside ? this.y > bounds.getCenterY() : this.y > bounds.getMaxY() && this.yvel < 0;
+				boolean topCondition = inside ? this.y < bounds.getCenterY() : this.y < bounds.getMinY() && this.yvel > 0;
+				if (bottomCondition) {
 					return Side.BOTTOM;
-				} else if (topCondition && this.yvel > 0) {
+				} else if (topCondition) {
 					return Side.TOP;
 				}
 			} else {
-				boolean rightCondition = inside ? this.x > bounds.getCenterX() : this.x > bounds.getMaxX();
-				boolean leftCondition = inside ? this.x < bounds.getCenterX() : this.x < bounds.getMinX();
-				if (rightCondition && this.xvel < 0) {
+				boolean rightCondition = inside ? this.x > bounds.getCenterX() : this.x > bounds.getMaxX() && this.xvel < 0;
+				boolean leftCondition = inside ? this.x < bounds.getCenterX() : this.x < bounds.getMinX() && this.xvel > 0;
+				if (rightCondition) {
 					return Side.RIGHT;
-				} else if (leftCondition && this.xvel > 0) {
+				} else if (leftCondition) {
 					return Side.LEFT;
 				}
 			}
@@ -56,6 +58,10 @@ public abstract class Collidable extends Sprite {
 	}
 	
 	public boolean allowsInsideCollision() {
+		return true;
+	}
+	
+	public boolean isSolid() {
 		return true;
 	}
 	
