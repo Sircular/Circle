@@ -11,7 +11,9 @@ import com.sircular.circle.engine.Keyboard;
 import com.sircular.circle.engine.MainCanvas;
 import com.sircular.circle.engine.Mouse;
 import com.sircular.circle.engine.StateEngine;
-import com.sircular.circle.levels.MainLevel;
+import com.sircular.circle.engine.TextRenderer;
+import com.sircular.circle.menus.MainMenu;
+import com.sircular.circle.menus.Menu1;
 
 public class MainWindow extends JFrame implements KeyListener, FocusListener {
 
@@ -36,8 +38,11 @@ public class MainWindow extends JFrame implements KeyListener, FocusListener {
 	public void init(int width, int height, String title) {
 		milliDelay = 1000/FPS;
 		
+		TextRenderer.loadFont(6, 7, "/com/sircular/circle/data/assets/img/text.png");
+		
 		engine = new StateEngine();
-		MainLevel level = new MainLevel(engine, width, height);
+		MainMenu level = new MainMenu(engine, width, height);
+		level.setMenu(new Menu1(engine, level, width, height));
 		engine.setState(level);
 		
 		Mouse.x = 0;

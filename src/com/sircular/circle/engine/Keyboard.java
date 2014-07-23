@@ -31,5 +31,9 @@ public class Keyboard {
 	public static void addListener(InputListener listener) {
 		listeners.add(listener);
 	}
+	
+	public static void removeListener(InputListener listener) {
+		listeners.remove(listener);
+	}
 
 }

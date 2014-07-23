@@ -1,6 +1,7 @@
 package com.sircular.circle.levels.extra.entities;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -17,14 +18,18 @@ import com.sircular.circle.engine.Keyboard;
 import com.sircular.circle.engine.MathUtils;
 import com.sircular.circle.engine.SlicedImage;
 import com.sircular.circle.engine.TextRenderer;
+import com.sircular.circle.levels.MainLevel;
 import com.sircular.circle.levels.extra.Camera;
 import com.sircular.circle.levels.extra.Collidable;
+import com.sircular.circle.levels.extra.MapLoader;
 
 public class Player extends Collidable {
 	
 	private final static String IMG_PATH = "/com/sircular/circle/data/assets/img/player.png";
 	
 	// arbitrary; used for variable frame rate; tweak to change speed
+	
+	private MainLevel level;
 
 	private final float FRICTION = 0.99f;
 	private final float BOUNCINESS = 0.2f;
@@ -34,11 +39,13 @@ public class Player extends Collidable {
 	
 	private boolean canJump;
 	
-	private String signDisplay;
+	private BufferedImage signDisplay;
 	
 	private SlicedImage signBg;
 		
-	public Player() {
+	public Player(MainLevel level) {
+		this.level = level;
+		
 		try {
 			signBg = new SlicedImage(ImageIO.read(this.getClass().getResource("/com/sircular/circle/data/assets/img/sign_bg.png")),
 					32, 32, 64, 64);
@@ -88,6 +95,8 @@ public class Player extends Collidable {
 			handleCollisions(delta, boxArea, side);
 		}
 		
+		boolean removeSign = true;
+		
 		for (Collidable entity : entities) {
 			Area colArea = entity.getCollisionShape();
 			Side side = this.hasCollided(colArea, entity.allowsInsideCollision());
@@ -98,11 +107,24 @@ public class Player extends Collidable {
 				
 				// SIGNS
 				if (entity instanceof Sign) {
+					removeSign = false;
+					if (signDisplay != null)
+						continue;
 					Sign sign = (Sign)entity;
-					signDisplay = sign.getText();
+					String text = sign.getText();
+					BufferedImage textImg = TextRenderer.renderText(text, 3, Color.white);
+					BufferedImage signImg = signBg.render(textImg.getWidth(), textImg.getHeight());
+					signImg.getGraphics().drawImage(textImg, 32, 32, null);
+					signDisplay = signImg;
+				}
+				if (entity instanceof Goal) {
+					this.level.end();
 				}
 			}
 		}
+		
+		if (removeSign)
+			signDisplay = null;
 		
 		// move the camera
 		cam.centerTowards((int)this.x, (int)this.y, 0.1f);
@@ -160,10 +182,13 @@ public class Player extends Collidable {
 		g2.translate(-this.x+frame.x, -this.y+frame.y);
 		
 		if (signDisplay != null) {
-			BufferedImage textImg = TextRenderer.renderText(signDisplay, Color.white);
-			g2.drawImage(signBg.render(textImg.getWidth(), textImg.getHeight()), 64, 64, null);
-			g2.drawImage(textImg, 96, 96, null);
+			Dimension camSize = cam.getSize();
+			int yPos = (int) (this.y-frame.y > camSize.height/2 ? (camSize.height/4)-(signDisplay.getHeight()/2) : (camSize.height*0.75f)-(signDisplay.getHeight()/2));
+			g2.drawImage(signDisplay, (camSize.width/2)-(signDisplay.getWidth()/2), yPos, null);
 		}
+		
+		// useful debug
+		g2.drawImage(TextRenderer.renderText((int)(this.x/MapLoader.TILE_SIZE)+", "+(int)(this.y/MapLoader.TILE_SIZE), 2), 48, 48, null);
 	}
 
 }

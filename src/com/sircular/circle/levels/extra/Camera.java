@@ -1,5 +1,6 @@
 package com.sircular.circle.levels.extra;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 
@@ -35,6 +36,10 @@ public class Camera {
 	
 	public Point getFramePosition() {
 		return new Point(center.x-(width/2), center.y-(height/2));
+	}
+	
+	public Dimension getSize() {
+		return new Dimension(width, height);
 	}
 
 }

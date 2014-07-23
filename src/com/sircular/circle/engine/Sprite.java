@@ -46,7 +46,7 @@ public class Sprite {
 		this.yvel += /*deltaAdjust(delta, */yaccel;//);
 	}
 	
-	public void update(int delta) {
+	public void update(long delta) {
 		
 	}
 	

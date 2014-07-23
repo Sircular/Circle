@@ -1,13 +1,25 @@
 { "entities" : [
 	{
-	"type":"platform",
-	"tile_x":12,
-	"tile_y":6
-	}, 
+	"type":"sign",
+	"tile_x":5,
+	"tile_y":13,
+	"text":"This is my first sign."
+	},
 	{
 	"type":"sign",
-	"tile_x":1,
-	"tile_y":13,
-	"text":"Herp derp."
+	"tile_x":17,
+	"tile_y":6,
+	"text":"This is a second sign."
+	},
+	{
+	"type":"sign",
+	"tile_x":36,
+	"tile_y":9,
+	"text":"This is a third (and final) sign."
+	},
+	{
+	"type":"goal",,
+	"tile_x":38,
+	"tile_y":9
 	}
 ]}

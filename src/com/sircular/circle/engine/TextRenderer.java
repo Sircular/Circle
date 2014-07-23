@@ -4,14 +4,12 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TextRenderer {
 	
-	private static final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-_+=.";
+	private static final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-_+=.,";
 	
 	private static int glyphWidth, glyphHeight;
 	private static Map<Character, BufferedImage> glyphs;
@@ -28,14 +26,14 @@ public class TextRenderer {
 		}
 	}
 	
-	public static BufferedImage renderText(String text) {
-		return renderText(text, Color.black);
+	public static BufferedImage renderText(String text, int scale) {
+		return renderText(text, scale, Color.black);
 	}
 	
-	public static BufferedImage renderText(String text, Color col) {
+	public static BufferedImage renderText(String text, int scale, Color col) {
 		if (glyphs == null)
 			return null;
-		BufferedImage renderedImg = new BufferedImage(glyphWidth*text.length(), glyphHeight, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage renderedImg = new BufferedImage(glyphWidth*text.length()*scale, glyphHeight*scale, BufferedImage.TYPE_INT_ARGB);
 		
 		Graphics2D g2 = (Graphics2D) renderedImg.getGraphics();
 		
@@ -46,7 +44,7 @@ public class TextRenderer {
 		
 		for (int i = 0; i < text.length(); i++) {
 			BufferedImage glyph = glyphs.get(text.toUpperCase().charAt(i));
-			g2.drawImage(glyph, i*glyphWidth, 0, null);
+			g2.drawImage(glyph, i*glyphWidth*scale, 0, glyphWidth*scale, glyphHeight*scale, null);
 		}
 		
 		g2.setColor(col);

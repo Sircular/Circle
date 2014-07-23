@@ -1,6 +1,5 @@
 package com.sircular.circle.engine;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -26,7 +25,6 @@ public class SlicedImage {
 	}
 	
 	public BufferedImage render(int width, int height) {
-		System.out.println(height);
 		
 		BufferedImage renderedImage = new BufferedImage(slices[0].getWidth()+width+slices[8].getWidth(),
 				slices[0].getHeight()+height+slices[8].getHeight(), BufferedImage.TYPE_INT_ARGB);

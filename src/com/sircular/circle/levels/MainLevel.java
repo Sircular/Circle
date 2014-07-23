@@ -10,7 +10,6 @@ import java.util.List;
 import com.sircular.circle.engine.GameState;
 import com.sircular.circle.engine.Sprite;
 import com.sircular.circle.engine.StateEngine;
-import com.sircular.circle.engine.TextRenderer;
 import com.sircular.circle.levels.extra.ActiveCollidable;
 import com.sircular.circle.levels.extra.Camera;
 import com.sircular.circle.levels.extra.Collidable;
@@ -32,11 +31,9 @@ public class MainLevel extends GameState {
 	}
 
 	@Override
-	public void init() {
-		TextRenderer.loadFont(24, 28, "/com/sircular/circle/data/assets/img/text_large.png");
-		
+	public void init() {		
 		map = MapLoader.loadMap("level_2");
-		player = new Player();
+		player = new Player(this);
 		player.moveTo(48, 400);
 		entities = MapLoader.loadMapEntities("level_2");
 		
@@ -48,6 +45,8 @@ public class MainLevel extends GameState {
 		for (Collidable entity : entities) {
 			if (entity instanceof ActiveCollidable)
 				((ActiveCollidable)entity).update(delta, map.getCollisionBoxes(), entities);
+			else
+				entity.update(delta);
 		}
 		
 		player.update(delta, map.getCollisionBoxes(), entities, camera);
@@ -83,6 +82,10 @@ public class MainLevel extends GameState {
 		}
 		
 		player.draw(g2, camera);
+	}
+	
+	public void end() {
+		System.exit(0);
 	}
 
 	@Override

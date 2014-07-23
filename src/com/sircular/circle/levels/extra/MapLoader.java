@@ -14,12 +14,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.sircular.circle.levels.extra.entities.Goal;
 import com.sircular.circle.levels.extra.entities.Sign;
 import com.sircular.circle.levels.extra.entities.TestPlatform;
 
 public class MapLoader {
 	
-	private static final int TILE_SIZE = 32; // change this to make tiles bigger or smaller
+	public static final int TILE_SIZE = 32; // change this to make tiles bigger or smaller
 	
 	private static final String LEVEL_PATH = "/com/sircular/circle/data/assets/levels/";
 	private static final String LEVEL_IMG_EXT = ".png";
@@ -32,7 +33,8 @@ public class MapLoader {
 	
 	private static enum EntityType {
 		platform,
-		sign
+		sign,
+		goal
 	}
 	
 	public static TileMap loadMap(String name) {
@@ -126,6 +128,10 @@ public class MapLoader {
 				case platform:
 					TestPlatform platform = new TestPlatform(objX, objY);
 					entities.add(platform);
+					break;
+				case goal:
+					Goal goal = new Goal(objX, objY);
+					entities.add(goal);
 					break;
 				}
 				
