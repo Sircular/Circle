@@ -1,4 +1,14 @@
-{ "entities" : [
+{ 
+"metadata" : {
+	
+	"tileset":"basic"
+},
+"entities" : [
+	{
+	"type":"platform",
+	"tile_x":27,
+	"tile_y":13
+	},
 	{
 	"type":"sign",
 	"tile_x":5,
@@ -22,4 +32,5 @@
 	"tile_x":38,
 	"tile_y":9
 	}
-]}
+]
+}

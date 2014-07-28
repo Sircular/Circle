@@ -8,8 +8,6 @@ import com.sircular.circle.levels.extra.Camera;
 
 public class Sprite {
 	
-	protected final float DELTA_FACTOR = 0.05f;
-	
 	public float x, y;
 	protected float xvel, yvel;
 	protected BufferedImage image;
@@ -37,13 +35,9 @@ public class Sprite {
 		this.y = y;
 	}
 	
-	protected float deltaAdjust(long delta, float value) {
-		return value*delta*DELTA_FACTOR;
-	}
-	
 	protected void accelerate(long delta, float xaccel, float yaccel) {
-		this.xvel += /*deltaAdjust(delta, */xaccel;//);
-		this.yvel += /*deltaAdjust(delta, */yaccel;//);
+		this.xvel += xaccel*delta;
+		this.yvel += yaccel*delta;
 	}
 	
 	public void update(long delta) {

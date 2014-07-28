@@ -26,24 +26,23 @@ public class SlicedImage {
 	
 	public BufferedImage render(int width, int height) {
 		
-		BufferedImage renderedImage = new BufferedImage(slices[0].getWidth()+width+slices[8].getWidth(),
-				slices[0].getHeight()+height+slices[8].getHeight(), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage renderedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
 		Graphics g = renderedImage.getGraphics();
 		// draw the corners
 		g.drawImage(slices[0], 0, 0, null);
-		g.drawImage(slices[2], slices[0].getWidth()+width, 0, null);
-		g.drawImage(slices[6], 0, slices[0].getHeight()+height, null);
-		g.drawImage(slices[8], slices[0].getWidth()+width, slices[0].getHeight()+height, null);
+		g.drawImage(slices[2], width-slices[2].getWidth(), 0, null);
+		g.drawImage(slices[6], 0, height-slices[6].getHeight(), null);
+		g.drawImage(slices[8], width-slices[8].getWidth(), height-slices[6].getHeight(), null);
 		
 		// draw the edges
-		g.drawImage(renderTiledSection(slices[1], width, slices[0].getHeight()), slices[0].getWidth(), 0, null);
-		g.drawImage(renderTiledSection(slices[7], width, slices[8].getHeight()), slices[0].getWidth(), slices[0].getHeight()+height, null);
-		g.drawImage(renderTiledSection(slices[3], slices[0].getWidth(), height), 0, slices[0].getHeight(), null);
-		g.drawImage(renderTiledSection(slices[5], slices[0].getWidth(), height), slices[0].getWidth()+width, slices[0].getHeight(), null);
+		g.drawImage(renderTiledSection(slices[1], width-(slices[0].getWidth()+slices[8].getWidth()), slices[0].getHeight()), slices[0].getWidth(), 0, null);
+		g.drawImage(renderTiledSection(slices[7], width-(slices[0].getWidth()+slices[8].getWidth()), slices[8].getHeight()), slices[0].getWidth(), height-slices[8].getHeight(), null);
+		g.drawImage(renderTiledSection(slices[3], slices[0].getWidth(), height-(slices[0].getHeight()+slices[8].getHeight())), 0, slices[0].getHeight(), null);
+		g.drawImage(renderTiledSection(slices[5], slices[8].getWidth(), height-(slices[0].getHeight()+slices[8].getHeight())), width-slices[0].getWidth(), slices[0].getHeight(), null);
 		
 		// draw the center
-		g.drawImage(renderTiledSection(slices[4], width, height), slices[0].getWidth(), slices[0].getHeight(), null);
+		g.drawImage(renderTiledSection(slices[4], width-(slices[0].getWidth()+slices[8].getWidth()), height-(slices[0].getHeight()+slices[8].getHeight())), slices[0].getWidth(), slices[0].getHeight(), null);
 		
 		return renderedImage;
 	}

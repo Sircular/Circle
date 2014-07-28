@@ -16,6 +16,8 @@ import com.sircular.circle.levels.extra.Collidable;
 import com.sircular.circle.levels.extra.MapLoader;
 import com.sircular.circle.levels.extra.TileMap;
 import com.sircular.circle.levels.extra.entities.Player;
+import com.sircular.circle.menus.MainMenu;
+import com.sircular.circle.menus.Menu1;
 
 public class MainLevel extends GameState {
 	
@@ -67,14 +69,19 @@ public class MainLevel extends GameState {
 		g2.setColor(Color.gray);
 		g2.fillRect(0, 0, this.width, this.height);
 		
-		g2.setColor(Color.BLACK);
-		
 		for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
-				if (map.getTileAt(x, y) > 0) {
-					g2.fillRect((x*tileSize)-frame.x, (y*tileSize)-frame.y, tileSize, tileSize);
+				int type = map.getTileAt(x, y);
+				if (type > 0) {
+					g2.drawImage(map.getTileImage(type-1), (x*tileSize)-frame.x, (y*tileSize)-frame.y, null);
 				}
 			}
+		}
+		
+		g2.setColor(Color.RED);
+		
+		for (Rectangle box : map.getCollisionBoxes()) {
+			g2.drawRect(box.x-frame.x, box.y-frame.y, box.width, box.height);
 		}
 		
 		for (Sprite sprite : entities) {
@@ -85,7 +92,10 @@ public class MainLevel extends GameState {
 	}
 	
 	public void end() {
-		System.exit(0);
+		MainMenu mm = new MainMenu(this.engine, this.width, this.height);
+		Menu1 menu = new Menu1(this.engine, mm, this.width, this.height);
+		mm.setMenu(menu);
+		this.engine.setState(mm);
 	}
 
 	@Override

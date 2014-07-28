@@ -7,7 +7,7 @@ import com.sircular.circle.engine.Sprite;
 
 public abstract class Collidable extends Sprite {
 	
-	protected final float GRAVITY = 0.2f;
+	protected final float GRAVITY = 0.02f;
 	
 	public enum Side {
 		TOP,
@@ -34,19 +34,24 @@ public abstract class Collidable extends Sprite {
 		area1.intersect(area2);
 		if (!area1.isEmpty()) {
 			Rectangle bounds = area2.getBounds();
-			float distX = (float) Math.max(bounds.getMinX()-this.x, this.x-bounds.getMaxX());
-			float distY = (float) Math.max(bounds.getMinY()-this.y, this.y-bounds.getMaxY());
+			
+			float oldX = this.x-this.xvel;
+			float oldY = this.y-this.yvel;
+			
+			float distX = (float) Math.max(bounds.getMinX()-oldX, oldX-bounds.getMaxX());
+			float distY = (float) Math.max(bounds.getMinY()-oldY, oldY-bounds.getMaxY());
+			
 			if (distY > distX) {
-				boolean bottomCondition = inside ? this.y > bounds.getCenterY() : this.y > bounds.getMaxY() && this.yvel < 0;
-				boolean topCondition = inside ? this.y < bounds.getCenterY() : this.y < bounds.getMinY() && this.yvel > 0;
+				boolean bottomCondition = inside ? oldY > bounds.getCenterY() : oldY > bounds.getMaxY() && this.yvel < 0;
+				boolean topCondition = inside ? oldY < bounds.getCenterY() : oldY < bounds.getMinY() && this.yvel > 0;
 				if (bottomCondition) {
 					return Side.BOTTOM;
 				} else if (topCondition) {
 					return Side.TOP;
 				}
 			} else {
-				boolean rightCondition = inside ? this.x > bounds.getCenterX() : this.x > bounds.getMaxX() && this.xvel < 0;
-				boolean leftCondition = inside ? this.x < bounds.getCenterX() : this.x < bounds.getMinX() && this.xvel > 0;
+				boolean rightCondition = inside ? oldX > bounds.getCenterX() : oldX > bounds.getMaxX() && this.xvel < 0;
+				boolean leftCondition = inside ? oldX < bounds.getCenterX() : oldX < bounds.getMinX() && this.xvel > 0;
 				if (rightCondition) {
 					return Side.RIGHT;
 				} else if (leftCondition) {

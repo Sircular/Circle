@@ -1,6 +1,7 @@
 package com.sircular.circle.levels.extra;
 
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -10,11 +11,14 @@ public class TileMap {
 	private int TILE_SIZE;
 	private int[][] TILE_MAP;
 	
+	private BufferedImage[] tileImgs;
 	private List<Rectangle> collisionTiles = new ArrayList<Rectangle>();
 	
-	public TileMap(int[][] mapData, int tileSize) {
+	public TileMap(int[][] mapData, int tileSize, BufferedImage[] tileImgs) {
 		this.TILE_MAP = mapData;
 		this.TILE_SIZE = tileSize;
+		
+		this.tileImgs = tileImgs;
 		
 		// generate collision tiles
 		for (int y = 0; y < TILE_MAP.length; y++) {
@@ -59,6 +63,10 @@ public class TileMap {
 		if (y < 0 || y >= TILE_MAP.length || x < 0 || x >= TILE_MAP[y].length) return 0;
 		
 		return TILE_MAP[y][x];
+	}
+	
+	public BufferedImage getTileImage(int index) {
+		return tileImgs[index];
 	}
 	
 	public List<Rectangle> getCollisionBoxes() {

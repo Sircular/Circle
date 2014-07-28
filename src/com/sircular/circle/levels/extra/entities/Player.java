@@ -32,7 +32,8 @@ public class Player extends Collidable {
 	private MainLevel level;
 
 	private final float FRICTION = 0.99f;
-	private final float BOUNCINESS = 0.2f;
+	private final float BOUNCINESS = 0.02f;	// needs to be really, REALLY low
+											// for some unknown reason
 
 	private float rotation = 0;
 	private float rotvel = 0;
@@ -68,23 +69,23 @@ public class Player extends Collidable {
 	public void update(long delta, List<Rectangle> tiles, List<Collidable> entities, Camera cam) {
 		signDisplay = null;
 		
-		accelerate(delta, 0, GRAVITY);
+		yvel += GRAVITY*delta;
 		
 		if (Keyboard.isKeyDown(KeyEvent.VK_A))
-			accelerate(delta, -0.1f, 0);
+			xvel = Math.max(-0.5f*delta, xvel-(0.02f*delta));
 		if (Keyboard.isKeyDown(KeyEvent.VK_D))
-			accelerate(delta, 0.1f, 0);
+			xvel = Math.min(0.5f*delta, xvel+(0.02f*delta));
 		if (Keyboard.isKeyDown(KeyEvent.VK_W) && canJump)
-			yvel = -7;
+			yvel = -0.5f*delta;
 		
 		canJump = false;
 		
 		//xvel *= FRICTION;
 		//yvel *= FRICTION;
 		
-		this.x += deltaAdjust(delta, xvel);
-		this.y += deltaAdjust(delta, yvel);
-		this.rotation += deltaAdjust(delta, rotvel);
+		this.x += xvel;
+		this.y += yvel;
+		this.rotation += rotvel;
 		
 		// check for collisions
 		
@@ -112,8 +113,8 @@ public class Player extends Collidable {
 						continue;
 					Sign sign = (Sign)entity;
 					String text = sign.getText();
-					BufferedImage textImg = TextRenderer.renderText(text, 3, Color.white);
-					BufferedImage signImg = signBg.render(textImg.getWidth(), textImg.getHeight());
+					BufferedImage textImg = TextRenderer.renderText(text, 1, Color.white);
+					BufferedImage signImg = signBg.render(textImg.getWidth()+64, textImg.getHeight()+64);
 					signImg.getGraphics().drawImage(textImg, 32, 32, null);
 					signDisplay = signImg;
 				}
@@ -138,29 +139,29 @@ public class Player extends Collidable {
 		Rectangle box = area.getBounds();
 		
 		if (side == Side.TOP) {
-			this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, -1);
+			this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, -1)*delta;
 			this.xvel *= FRICTION;
-			this.rotvel = deltaAdjust(delta, this.xvel)/20f;
+			this.rotvel = (xvel)/20f;
 			
 			this.y = (float) (box.getMinY()-(this.image.getHeight()/2));
 			// we can jump, because we're on the floor
 			canJump = true;
 		} else if (side == Side.BOTTOM) {
-			this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, 1);
+			this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, 1)*delta;
 			this.xvel *= FRICTION;
-			this.rotvel = -deltaAdjust(delta, this.xvel)/20f;
+			this.rotvel = (xvel)/-20f;
 			
 			this.y =  (float) (box.getMaxY()+(this.image.getHeight()/2));
 		} else if (side == Side.LEFT) {
-			this.xvel = MathUtils.setSign(this.xvel*BOUNCINESS, -1);
+			this.xvel = MathUtils.setSign(this.xvel*BOUNCINESS, -1)*delta;
 			this.yvel *= FRICTION;
-			this.rotvel = -deltaAdjust(delta, this.yvel)/20f;
+			this.rotvel = (yvel)/-20f;
 			
 			this.x = (float) (box.getMinX()-(this.image.getWidth()/2));
 		} else if (side == Side.RIGHT) {
-			this.xvel = MathUtils.setSign(this.xvel*BOUNCINESS, 1);
+			this.xvel = MathUtils.setSign(this.xvel*BOUNCINESS, 1)*delta;
 			this.yvel *= FRICTION; 
-			this.rotvel = deltaAdjust(delta, this.yvel)/20f;
+			this.rotvel =(yvel)/20f;
 			
 			this.x = (float) (box.getMaxX()+(this.image.getWidth()/2));
 		}
@@ -188,7 +189,7 @@ public class Player extends Collidable {
 		}
 		
 		// useful debug
-		g2.drawImage(TextRenderer.renderText((int)(this.x/MapLoader.TILE_SIZE)+", "+(int)(this.y/MapLoader.TILE_SIZE), 2), 48, 48, null);
+		g2.drawImage(TextRenderer.renderText((int)(this.x/MapLoader.TILE_SIZE)+", "+(int)(this.y/MapLoader.TILE_SIZE), 1), 48, 48, null);
 	}
 
 }

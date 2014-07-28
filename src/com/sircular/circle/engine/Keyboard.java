@@ -35,5 +35,9 @@ public class Keyboard {
 	public static void removeListener(InputListener listener) {
 		listeners.remove(listener);
 	}
+	
+	public static Map<Integer, Boolean> getKeyMap() {
+		return keyMap;
+	}
 
 }

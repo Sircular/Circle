@@ -38,7 +38,7 @@ public class MainWindow extends JFrame implements KeyListener, FocusListener {
 	public void init(int width, int height, String title) {
 		milliDelay = 1000/FPS;
 		
-		TextRenderer.loadFont(6, 7, "/com/sircular/circle/data/assets/img/text.png");
+		TextRenderer.loadFont(12, 14, "/com/sircular/circle/data/assets/img/text.png");
 		
 		engine = new StateEngine();
 		MainMenu level = new MainMenu(engine, width, height);
