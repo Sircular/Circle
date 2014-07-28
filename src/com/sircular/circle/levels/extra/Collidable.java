@@ -70,7 +70,7 @@ public abstract class Collidable extends Sprite {
 		return true;
 	}
 	
-	public boolean onCollide(Side side) { // true if it is solid from that side
+	public boolean onCollide(Collidable entity, Side side) { // true if it is solid from that side
 		return side != null; // null means there was no collision; this is for lazy programmers (me) only.
 	}
 

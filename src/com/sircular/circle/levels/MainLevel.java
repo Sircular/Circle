@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Iterator;
 import java.util.List;
 
 import com.sircular.circle.engine.GameState;
@@ -44,7 +45,15 @@ public class MainLevel extends GameState {
 
 	@Override
 	public void update(long delta) {
-		for (Collidable entity : entities) {
+		Iterator<Collidable> it = entities.iterator();
+		while (it.hasNext()) {
+			Collidable entity = it.next();
+			
+			if (entity.shouldRemove()) {
+				it.remove();
+				continue;
+			}
+			
 			if (entity instanceof ActiveCollidable)
 				((ActiveCollidable)entity).update(delta, map.getCollisionBoxes(), entities);
 			else

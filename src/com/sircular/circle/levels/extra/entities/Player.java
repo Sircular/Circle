@@ -101,7 +101,7 @@ public class Player extends Collidable {
 		for (Collidable entity : entities) {
 			Area colArea = entity.getCollisionShape();
 			Side side = this.hasCollided(colArea, entity.allowsInsideCollision());
-			if (entity.onCollide(side)) {
+			if (entity.onCollide(this, side)) {
 				if (entity.isSolid())
 					handleCollisions(delta, colArea, side);
 				// special logic here

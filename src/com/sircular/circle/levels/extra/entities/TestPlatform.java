@@ -19,8 +19,8 @@ public class TestPlatform extends ActiveCollidable {
 	}
 
 	@Override
-	public boolean onCollide(Side side) {
-		if (side == Side.TOP) {
+	public boolean onCollide(Collidable other, Side side) {
+		if (side == Side.TOP && other instanceof Player) {
 			rising = true;
 			return true;
 		}

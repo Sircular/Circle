@@ -49,5 +49,9 @@ public class Sprite {
 		g2.drawImage(image, (int)this.x-(this.image.getWidth()/2)-frame.x, (int)this.y-(this.image.getHeight()/2)-frame.y, null);
 	}
 	
+	public boolean shouldRemove() {
+		return false;
+	}
+	
 	
 }
