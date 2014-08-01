@@ -16,6 +16,7 @@ import com.sircular.circle.levels.extra.Camera;
 import com.sircular.circle.levels.extra.Collidable;
 import com.sircular.circle.levels.extra.MapLoader;
 import com.sircular.circle.levels.extra.TileMap;
+import com.sircular.circle.levels.extra.entities.Enemy;
 import com.sircular.circle.levels.extra.entities.Player;
 import com.sircular.circle.menus.MainMenu;
 import com.sircular.circle.menus.Menu1;
@@ -39,6 +40,8 @@ public class MainLevel extends GameState {
 		player = new Player(this);
 		player.moveTo(48, 400);
 		entities = MapLoader.loadMapEntities("level_2");
+		
+		entities.add(new Enemy(500, 150));
 		
 		camera = new Camera(this.width, this.height, new Rectangle(0, 0, map.getWidth()*map.getTileSize(), map.getHeight()*map.getTileSize()));
 	}

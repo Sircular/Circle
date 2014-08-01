@@ -118,6 +118,7 @@ public class Player extends Collidable {
 					signImg.getGraphics().drawImage(textImg, 32, 32, null);
 					signDisplay = signImg;
 				}
+				// GOAL
 				if (entity instanceof Goal) {
 					this.level.end();
 				}

@@ -31,12 +31,16 @@ public abstract class Collidable extends Sprite {
 	public Side hasCollided(Area area, boolean inside) { // returns which side was hit, null if no collision occurred
 		Area area1 = this.getCollisionShape();
 		Area area2 = (Area) area.clone();
+		
+		float oldX = this.x-this.xvel;
+		float oldY = this.y-this.yvel;
+		
+		float centerX = (this.x+oldX)/2f;
+		float centerY = (this.y+oldY)/2f;
+		
 		area1.intersect(area2);
-		if (!area1.isEmpty()) {
+		if (!area1.isEmpty() || area.contains(centerX, centerY)) {
 			Rectangle bounds = area2.getBounds();
-			
-			float oldX = this.x-this.xvel;
-			float oldY = this.y-this.yvel;
 			
 			float distX = (float) Math.max(bounds.getMinX()-oldX, oldX-bounds.getMaxX());
 			float distY = (float) Math.max(bounds.getMinY()-oldY, oldY-bounds.getMaxY());

@@ -83,12 +83,10 @@ public class MainWindow extends JFrame implements KeyListener, FocusListener {
 			engine.draw(canvas.getCanvasGraphics());
 			
 			canvas.repaint();
-			this.repaint();
 			
 			try {
 				Thread.sleep(Math.max(0, milliDelay-(System.currentTimeMillis()-startTime)));
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
