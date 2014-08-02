@@ -1,5 +1,6 @@
 package com.sircular.circle.levels.extra.entities;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -98,6 +99,11 @@ public class Enemy extends ActiveCollidable{
 		int height = img.getHeight();
 		
 		return new Area(new Rectangle((int)this.x-(width/2), (int)this.y-(width/2), width, height));
+	}
+
+	@Override
+	public Dimension getSize() {
+		 return new Dimension(frames[0].getWidth(), frames[0].getHeight());
 	}
 
 }

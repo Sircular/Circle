@@ -1,5 +1,6 @@
 package com.sircular.circle.levels.extra.entities;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Area;
@@ -51,6 +52,11 @@ public class Goal extends Collidable {
 	
 	public boolean isSolid() {
 		return false;
+	}
+
+	@Override
+	public Dimension getSize() {
+		return new Dimension(imgs[0].getWidth(), imgs[0].getHeight());
 	}
 
 }

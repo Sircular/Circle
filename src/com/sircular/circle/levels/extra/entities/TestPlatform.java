@@ -1,15 +1,20 @@
 package com.sircular.circle.levels.extra.entities;
 
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 import com.sircular.circle.levels.extra.ActiveCollidable;
+import com.sircular.circle.levels.extra.Camera;
 import com.sircular.circle.levels.extra.Collidable;
 
 public class TestPlatform extends ActiveCollidable {
 	
 	private boolean rising = false;
+	private BufferedImage image;
 	
 	public TestPlatform(int x, int y) {
 		this.x = x;
@@ -37,6 +42,17 @@ public class TestPlatform extends ActiveCollidable {
 	@Override
 	public boolean allowsInsideCollision() {
 		return false;
+	}
+
+	@Override
+	public Dimension getSize() {
+		return new Dimension(image.getWidth(), image.getHeight());
+	}
+
+	@Override
+	public void draw(Graphics2D g2, Camera cam) {
+		Point frame = cam.getFramePosition();
+		g2.drawImage(image, (int)x-image.getWidth()/2-frame.x, (int)y-image.getHeight()/2-frame.y, null);		
 	}
 	
 	

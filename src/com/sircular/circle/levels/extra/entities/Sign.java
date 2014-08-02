@@ -1,14 +1,19 @@
 package com.sircular.circle.levels.extra.entities;
 
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.sircular.circle.levels.extra.Camera;
 import com.sircular.circle.levels.extra.Collidable;
 
 public class Sign extends Collidable {
 	
 	private String text;
+	private BufferedImage image;
 	
 	public Sign(int x, int y, String text) {
 		this.x = x;
@@ -29,6 +34,17 @@ public class Sign extends Collidable {
 	
 	public boolean isSolid() {
 		return false;
+	}
+
+	@Override
+	public Dimension getSize() {
+		return new Dimension(image.getWidth(), image.getHeight());
+	}
+
+	@Override
+	public void draw(Graphics2D g2, Camera cam) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

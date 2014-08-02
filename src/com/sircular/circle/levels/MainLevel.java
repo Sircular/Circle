@@ -9,8 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.sircular.circle.engine.GameState;
+import com.sircular.circle.engine.InputListener;
+import com.sircular.circle.engine.Keyboard;
 import com.sircular.circle.engine.Sprite;
 import com.sircular.circle.engine.StateEngine;
+import com.sircular.circle.engine.TextRenderer;
 import com.sircular.circle.levels.extra.ActiveCollidable;
 import com.sircular.circle.levels.extra.Camera;
 import com.sircular.circle.levels.extra.Collidable;
@@ -28,6 +31,9 @@ public class MainLevel extends GameState {
 	Camera camera;
 	
 	List<Collidable> entities;
+	
+	private InputListener pauseListener;
+	private boolean paused = false;
 
 	public MainLevel(StateEngine engine, int width, int height) {
 		super(engine, width, height);
@@ -44,26 +50,52 @@ public class MainLevel extends GameState {
 		entities.add(new Enemy(500, 150));
 		
 		camera = new Camera(this.width, this.height, new Rectangle(0, 0, map.getWidth()*map.getTileSize(), map.getHeight()*map.getTileSize()));
+	
+		// listener for pause menu
+		pauseListener = new InputListener() {
+
+			@Override
+			public void keyPressed(int keyCode) {
+				paused = keyCode == 80 ? !paused : paused;
+			}
+
+			@Override
+			public void keyReleased(int keyCode) {}
+
+			@Override
+			public void mouseMoved(int x, int y) {}
+
+			@Override
+			public void mousePressed(int button) {}
+
+			@Override
+			public void mouseReleased(int button) {}
+			
+		};
+		
+		Keyboard.addListener(pauseListener);
 	}
 
 	@Override
 	public void update(long delta) {
-		Iterator<Collidable> it = entities.iterator();
-		while (it.hasNext()) {
-			Collidable entity = it.next();
-			
-			if (entity.shouldRemove()) {
-				it.remove();
-				continue;
+		if (!paused) {
+			Iterator<Collidable> it = entities.iterator();
+			while (it.hasNext()) {
+				Collidable entity = it.next();
+				
+				if (entity.shouldRemove()) {
+					it.remove();
+					continue;
+				}
+				
+				if (entity instanceof ActiveCollidable)
+					((ActiveCollidable)entity).update(delta, map.getCollisionBoxes(), entities);
+				else
+					entity.update(delta);
 			}
 			
-			if (entity instanceof ActiveCollidable)
-				((ActiveCollidable)entity).update(delta, map.getCollisionBoxes(), entities);
-			else
-				entity.update(delta);
+			player.update(delta, map.getCollisionBoxes(), entities, camera);
 		}
-		
-		player.update(delta, map.getCollisionBoxes(), entities, camera);
 	}
 
 	@Override
@@ -101,6 +133,12 @@ public class MainLevel extends GameState {
 		}
 		
 		player.draw(g2, camera);
+		
+		if (paused) {
+			g2.setColor(new Color(0, 0, 0, 128));
+			g2.fillRect(0, 0, width, height);
+			g2.drawImage(TextRenderer.renderText("(Menu Not Implemented)", 2, Color.white), 40, 40, null);
+		}
 	}
 	
 	public void end() {
@@ -112,8 +150,7 @@ public class MainLevel extends GameState {
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
-		
+		Keyboard.removeListener(pauseListener);	
 	}
 
 }

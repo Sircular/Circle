@@ -40,6 +40,7 @@ public class Player extends Collidable {
 	
 	private boolean canJump;
 	
+	private BufferedImage image;
 	private BufferedImage signDisplay;
 	
 	private SlicedImage signBg;
@@ -191,6 +192,11 @@ public class Player extends Collidable {
 		
 		// useful debug
 		g2.drawImage(TextRenderer.renderText((int)(this.x/MapLoader.TILE_SIZE)+", "+(int)(this.y/MapLoader.TILE_SIZE), 1), 48, 48, null);
+	}
+
+	@Override
+	public Dimension getSize() {
+		return new Dimension(image.getWidth(), image.getHeight());
 	}
 
 }
