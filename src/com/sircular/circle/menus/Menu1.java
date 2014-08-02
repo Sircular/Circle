@@ -17,10 +17,10 @@ public class Menu1 extends MenuClass {
 		super(engine, menu, width, height);
 		
 		buttons = new Button[4];
-		buttons[0] = new Button(this, 0, width/2, 200, 400, "Play");
-		buttons[1] = new Button(this, 1, width/2, 264, 400, "Next Menu");
-		buttons[2] = new Button(this, 3, width/2, 328, 400, "Keyboard Test");
-		buttons[3] = new Button(this, 2, width/2, 392, 400, "Quit");
+		buttons[0] = ButtonFactory.createTextButton(this, 0, width/2, 200, 400, "Play");
+		buttons[1] = ButtonFactory.createTextButton(this, 1, width/2, 264, 400, "Next Menu");
+		buttons[2] = ButtonFactory.createTextButton(this, 3, width/2, 328, 400, "Keyboard Test");
+		buttons[3] = ButtonFactory.createTextButton(this, 2, width/2, 392, 400, "Quit");
 		// TODO Auto-generated constructor stub
 	}
 

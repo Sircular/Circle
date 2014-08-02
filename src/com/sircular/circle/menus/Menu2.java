@@ -13,7 +13,7 @@ public class Menu2 extends MenuClass {
 
 	public Menu2(StateEngine engine, MainMenu menu, int width, int height) {
 		super(engine, menu, width, height);
-		button = new Button(this, 0, width/2, 256, 320, "Back");
+		button = ButtonFactory.createTextButton(this, 0, width/2, 256, 320, "Back");
 	}
 
 	@Override
