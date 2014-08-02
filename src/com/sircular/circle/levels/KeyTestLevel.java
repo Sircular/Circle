@@ -67,9 +67,4 @@ public class KeyTestLevel extends GameState {
 		
 	}
 
-	@Override
-	public boolean mouseVisible() {
-		return true;
-	}
-
 }
