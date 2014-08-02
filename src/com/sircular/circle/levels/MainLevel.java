@@ -12,7 +12,6 @@ import java.util.List;
 import com.sircular.circle.engine.GameState;
 import com.sircular.circle.engine.InputListener;
 import com.sircular.circle.engine.Keyboard;
-import com.sircular.circle.engine.Sprite;
 import com.sircular.circle.engine.StateEngine;
 import com.sircular.circle.engine.TextRenderer;
 import com.sircular.circle.levels.extra.ActiveCollidable;
@@ -135,6 +134,8 @@ public class MainLevel extends GameState {
 		}
 		
 		player.draw(g2, camera);
+		
+		g2.draw(player.getCollisionShape().createTransformedArea(AffineTransform.getTranslateInstance(-frame.x, -frame.y)));
 		
 		if (paused) {
 			g2.setColor(new Color(0, 0, 0, 128));
