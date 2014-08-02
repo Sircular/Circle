@@ -47,11 +47,7 @@ public class TextRenderer {
 			g2.drawImage(glyph, i*glyphWidth*scale, 0, glyphWidth*scale, glyphHeight*scale, null);
 		}
 		
-		g2.setColor(col);
-		g2.setComposite(AlphaComposite.SrcAtop);
-		g2.fillRect(0, 0, renderedImg.getWidth(), renderedImg.getHeight());
-		
-		return renderedImg;
+		return ImageColorizer.colorizeImage(renderedImg, col);
 	}
 	
 	
