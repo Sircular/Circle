@@ -19,5 +19,6 @@ public abstract class GameState {
 	public abstract void update(long delta);
 	public abstract void draw(Graphics g);
 	public abstract void cleanup();
+	public abstract boolean mouseVisible(); // only is run when the level is loaded, to prevent extra calls
 
 }

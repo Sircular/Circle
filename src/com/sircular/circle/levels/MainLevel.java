@@ -156,4 +156,9 @@ public class MainLevel extends GameState {
 		Keyboard.removeListener(pauseListener);	
 	}
 
+	@Override
+	public boolean mouseVisible() {
+		return false;
+	}
+
 }

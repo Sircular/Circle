@@ -29,9 +29,6 @@ public class Menu1 extends MenuClass {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void update(long delta) {}
 	
 	@Override
 	public void update(long delta, Point mousePos) {

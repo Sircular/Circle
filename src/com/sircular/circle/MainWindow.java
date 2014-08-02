@@ -1,9 +1,12 @@
 package com.sircular.circle;
 
+import java.awt.Cursor;
+import java.awt.Point;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
@@ -19,6 +22,13 @@ public class MainWindow extends JFrame implements KeyListener, FocusListener {
 
 	private static final long serialVersionUID = 1L;
 	private static final int FPS = 60;
+	
+	// JAVA, WHAT THE HELL??
+	private Cursor blankCursor = this.getToolkit().createCustomCursor(
+				new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB),
+				new Point(0, 0),
+				"blank"
+			);
 	
 	private MainCanvas canvas;
 	private StateEngine engine;
@@ -40,7 +50,7 @@ public class MainWindow extends JFrame implements KeyListener, FocusListener {
 		
 		TextRenderer.loadFont(12, 14, "/com/sircular/circle/data/assets/img/text.png");
 		
-		engine = new StateEngine();
+		engine = new StateEngine(this);
 		MainMenu level = new MainMenu(engine, width, height);
 		level.setMenu(new Menu1(engine, level, width, height));
 		engine.setState(level);
@@ -97,6 +107,14 @@ public class MainWindow extends JFrame implements KeyListener, FocusListener {
 		engine = null;
 
 		System.exit(0);
+	}
+	
+	// called by StateEngine
+	public void setMouseVisible(boolean show) {
+		if (show)
+			this.setCursor(Cursor.getDefaultCursor());
+		else
+			this.setCursor(this.blankCursor);
 	}
 	
 	@Override

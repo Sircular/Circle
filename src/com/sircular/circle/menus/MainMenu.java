@@ -79,4 +79,9 @@ public class MainMenu extends GameState {
 		
 	}
 
+	@Override
+	public boolean mouseVisible() {
+		return true;
+	}
+
 }

@@ -23,12 +23,6 @@ public class Menu2 extends MenuClass {
 	}
 
 	@Override
-	public void update(long delta) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void draw(Graphics g) {
 		g.drawImage(TextRenderer.renderText("Menu 2", 4, Color.white), 32, 32, null);
 		button.draw(g);

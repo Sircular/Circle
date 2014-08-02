@@ -2,13 +2,19 @@ package com.sircular.circle.engine;
 
 import java.awt.Graphics;
 
+import com.sircular.circle.MainWindow;
+
 public class StateEngine {
 	
 	private GameState currentState;
 	
+	private MainWindow window;
+	
 	private boolean focused;
 	
-	public StateEngine() {
+	public StateEngine(MainWindow window) {
+		this.window = window;
+		
 		focused = true;
 	}
 	
@@ -18,8 +24,10 @@ public class StateEngine {
 		
 		this.currentState = newState;
 		
-		if (this.currentState != null)
+		if (this.currentState != null) {
 			this.currentState.init();
+			this.window.setMouseVisible(this.currentState.mouseVisible());
+		}
 	}
 	
 	public void update(long delta) {
