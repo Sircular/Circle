@@ -2,6 +2,7 @@ package com.sircular.circle.levels.extra.entities;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -43,8 +44,8 @@ public class Sign extends Collidable {
 
 	@Override
 	public void draw(Graphics2D g2, Camera cam) {
-		// TODO Auto-generated method stub
-		
+		Point frame = cam.getFramePosition();
+		g2.drawImage(this.image, (int)this.x-image.getWidth()/2-frame.x, (int)this.y-image.getHeight()/2-frame.y, null);
 	}
 
 }

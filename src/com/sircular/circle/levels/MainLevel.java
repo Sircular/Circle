@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.util.Iterator;
 import java.util.List;
 
@@ -128,8 +129,9 @@ public class MainLevel extends GameState {
 			g2.drawRect(box.x-frame.x, box.y-frame.y, box.width, box.height);
 		}
 		
-		for (Sprite sprite : entities) {
+		for (Collidable sprite : entities) {
 			sprite.draw(g2, camera);
+			g2.draw(sprite.getCollisionShape().createTransformedArea(AffineTransform.getTranslateInstance(-frame.x, -frame.y)));
 		}
 		
 		player.draw(g2, camera);
