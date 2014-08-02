@@ -11,7 +11,7 @@ public class ButtonFactory {
 	
 	private final static String BUTTON_IMG_PATH = "/com/sircular/circle/data/assets/img/button.png";
 	
-	public static Button createTextButton(MenuClass menu, int id, int x, int y, int width, String text) {
+	public static Button createTextButton(ButtonHandler parent, int id, int x, int y, int width, String text) {
 		BufferedImage[] sheet = ImageLoader.loadSpriteSheet(BUTTON_IMG_PATH, 48, 48);
 		BufferedImage[] imgs = new BufferedImage[sheet.length];
 		
@@ -28,7 +28,7 @@ public class ButtonFactory {
 			imgs[i] = bgImg;
 		}
 		
-		return new Button(menu, id, x, y, width, 48, imgs);
+		return new Button(parent, id, x, y, width, 48, imgs);
 	}
 
 }

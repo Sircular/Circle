@@ -9,7 +9,7 @@ import com.sircular.circle.engine.Mouse;
 
 public class Button {
 	
-	private MenuClass menu;
+	private ButtonHandler parent;
 	private int id;
 	
 	private int x, y;
@@ -18,8 +18,8 @@ public class Button {
 	private boolean hovering;
 	private boolean mouseDown;
 	
-	public Button(MenuClass menu, int id, int x, int y, int width, int height, BufferedImage[] imgs) {
-		this.menu = menu;
+	public Button(ButtonHandler parent, int id, int x, int y, int width, int height, BufferedImage[] imgs) {
+		this.parent = parent;
 		this.id = id;
 		
 		this.x = x;
@@ -38,7 +38,7 @@ public class Button {
 		hovering = box.contains(mousePos);
 		if (!mouseDown && Mouse.isButtonDown(Mouse.LEFT_BUTTON))
 			if (hovering)
-				this.menu.buttonPressed(id);
+				this.parent.buttonPressed(id);
 		mouseDown = Mouse.isButtonDown(Mouse.LEFT_BUTTON);
 	}
 	

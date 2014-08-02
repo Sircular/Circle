@@ -5,7 +5,7 @@ import java.awt.Point;
 import com.sircular.circle.engine.GameState;
 import com.sircular.circle.engine.StateEngine;
 
-public abstract class MenuClass extends GameState {
+public abstract class MenuClass extends GameState implements ButtonHandler{
 	
 	protected MainMenu menu;
 
@@ -17,6 +17,7 @@ public abstract class MenuClass extends GameState {
 	
 	public abstract void update(long delta, Point mousePos);
 	
+	@Override
 	public abstract void buttonPressed(int id);
 
 }
