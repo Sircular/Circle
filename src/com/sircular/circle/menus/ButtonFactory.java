@@ -19,7 +19,7 @@ public class ButtonFactory {
 			BufferedImage img = sheet[i];
 			SlicedImage slice = new SlicedImage(img, 8, 24, 40, 25);
 			BufferedImage textImg = TextRenderer.renderText(text, 2, Color.white);
-			BufferedImage textImg2 = TextRenderer.renderText(text, 2, new Color(40, 40, 40, 255));
+			BufferedImage textImg2 = TextRenderer.renderText(text, 2, new Color(0, 0, 0, 128));
 			BufferedImage bgImg = slice.render(width, 48); // because we don't include the outer edges
 			bgImg.getGraphics().drawImage(textImg2, 3+(bgImg.getWidth()-textImg.getWidth())/2,
 					3+(bgImg.getHeight()-textImg.getHeight())/2, null);
