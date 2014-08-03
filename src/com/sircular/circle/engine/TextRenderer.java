@@ -37,9 +37,6 @@ public class TextRenderer {
 		
 		Graphics2D g2 = (Graphics2D) renderedImg.getGraphics();
 		
-		g2.setComposite(AlphaComposite.Clear);
-		g2.setColor(new Color(0, 0, 0, 0));
-		g2.fillRect(0, 0, renderedImg.getWidth(), renderedImg.getHeight());
 		g2.setComposite(AlphaComposite.SrcOver);
 		
 		for (int i = 0; i < text.length(); i++) {

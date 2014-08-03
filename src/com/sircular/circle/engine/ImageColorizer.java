@@ -11,9 +11,6 @@ public class ImageColorizer {
 		BufferedImage newImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = (Graphics2D) newImage.getGraphics();
 		
-		g2.setComposite(AlphaComposite.Clear);
-		g2.fillRect(0, 0, image.getWidth(), image.getHeight());
-		
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, color.getAlpha()/255f)); // transparency stuff
 		g2.drawImage(image, 0, 0, null);
 		
