@@ -43,7 +43,7 @@ public class Goal extends Collidable {
 	}
 	
 	@Override
-	public Area getCollisionShape() {
+	public Area getCollisionArea() {
 		return new Area(new Ellipse2D.Float(x-5, y-5, 10, 10));
 	}
 	

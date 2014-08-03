@@ -21,10 +21,10 @@ public abstract class Collidable extends Sprite {
 	}
 
 	
-	public abstract Area getCollisionShape();
+	public abstract Area getCollisionArea();
 	
 	public Side hasCollided(Area area, boolean inside) { // returns which side was hit, null if no collision occurred
-		Area area1 = this.getCollisionShape();
+		Area area1 = this.getCollisionArea();
 		Area area2 = (Area) area.clone();
 		
 		float oldX = this.x-this.xvel;

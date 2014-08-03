@@ -100,7 +100,7 @@ public class Player extends Collidable {
 		boolean removeSign = true;
 		
 		for (Collidable entity : entities) {
-			Area colArea = entity.getCollisionShape();
+			Area colArea = entity.getCollisionArea();
 			Side side = this.hasCollided(colArea, entity.allowsInsideCollision());
 			if (entity.onCollide(this, side)) {
 				if (entity.isSolid())
@@ -169,7 +169,7 @@ public class Player extends Collidable {
 		}
 	}
 	
-	public Area getCollisionShape() {
+	public Area getCollisionArea() {
 		return new Area(new Ellipse2D.Float(this.x-this.image.getWidth()/2, this.y-this.image.getHeight()/2, this.image.getWidth(), this.image.getHeight()));
 	}
 	

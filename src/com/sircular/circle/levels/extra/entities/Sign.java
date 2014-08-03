@@ -45,7 +45,7 @@ public class Sign extends Collidable {
 	}
 
 	@Override
-	public Area getCollisionShape() {
+	public Area getCollisionArea() {
 		return new Area(new Rectangle((int)x-image.getWidth()/2, (int)y-image.getHeight()/2, image.getWidth(), image.getHeight()));
 	}
 

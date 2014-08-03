@@ -92,7 +92,7 @@ public class Enemy extends ActiveCollidable{
 		return true;
 	}
 	
-	public Area getCollisionShape() {
+	public Area getCollisionArea() {
 		BufferedImage img = currentFrame();
 		int width = img.getWidth();
 		int height = img.getHeight();

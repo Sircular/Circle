@@ -130,12 +130,12 @@ public class MainLevel extends GameState {
 		
 		for (Collidable sprite : entities) {
 			sprite.draw(g2, camera);
-			g2.draw(sprite.getCollisionShape().createTransformedArea(AffineTransform.getTranslateInstance(-frame.x, -frame.y)));
+			g2.draw(sprite.getCollisionArea().createTransformedArea(AffineTransform.getTranslateInstance(-frame.x, -frame.y)));
 		}
 		
 		player.draw(g2, camera);
 		
-		g2.draw(player.getCollisionShape().createTransformedArea(AffineTransform.getTranslateInstance(-frame.x, -frame.y)));
+		g2.draw(player.getCollisionArea().createTransformedArea(AffineTransform.getTranslateInstance(-frame.x, -frame.y)));
 		
 		if (paused) {
 			g2.setColor(new Color(0, 0, 0, 128));
