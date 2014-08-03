@@ -2,7 +2,7 @@ package com.sircular.circle.engine.animation;
 
 import java.awt.image.BufferedImage;
 
-public class DirectionalFrameAnimation implements Animation {
+public class ReversibleAnimation implements Animation {
 	
 	private BufferedImage[] imgs;
 	private int currentFrame = 0;
@@ -13,7 +13,7 @@ public class DirectionalFrameAnimation implements Animation {
 	private boolean forward; // true if we're moving forward, false if backward
 	
 	
-	public DirectionalFrameAnimation(BufferedImage[] imgs, int fps, boolean forward) {
+	public ReversibleAnimation(BufferedImage[] imgs, int fps, boolean forward) {
 		this.imgs = imgs;
 		this.milliDelay = 1000/fps;
 		this.forward = forward;

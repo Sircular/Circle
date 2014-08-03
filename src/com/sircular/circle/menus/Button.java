@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.sircular.circle.engine.Mouse;
-import com.sircular.circle.engine.animation.DirectionalFrameAnimation;
+import com.sircular.circle.engine.animation.ReversibleAnimation;
 
 public class Button {
 	
@@ -14,7 +14,7 @@ public class Button {
 	private int id;
 	
 	private int x, y;
-	private DirectionalFrameAnimation anim;
+	private ReversibleAnimation anim;
 	
 	private boolean hovering;
 	private boolean mouseDown;
@@ -26,7 +26,7 @@ public class Button {
 		this.x = x;
 		this.y = y;
 		
-		this.anim = new DirectionalFrameAnimation(imgs, 60, false);
+		this.anim = new ReversibleAnimation(imgs, 60, false);
 	}
 	
 	public int getID() {
