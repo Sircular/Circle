@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 public class FrameLoopAnimation implements Animation {
 	
 	private int milliDelay;
-	private int deltaBuffer = 0; // I can't think of a better name right now
+	private int elapsedTime = 0; // I can't think of a better name right now
 	
 	private BufferedImage[] frames;
 	private int currentFrame = 0;
@@ -17,9 +17,9 @@ public class FrameLoopAnimation implements Animation {
 
 	@Override
 	public void update(long delta) {
-		deltaBuffer += delta;
-		while (deltaBuffer >= milliDelay) {
-			deltaBuffer -= milliDelay;
+		elapsedTime += delta;
+		while (elapsedTime >= milliDelay) {
+			elapsedTime -= milliDelay;
 			currentFrame = (currentFrame+1) % frames.length;
 		}
 	}

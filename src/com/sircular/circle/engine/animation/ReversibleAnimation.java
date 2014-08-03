@@ -8,7 +8,7 @@ public class ReversibleAnimation implements Animation {
 	private int currentFrame = 0;
 	
 	private int milliDelay;
-	private int deltaBuffer;
+	private int elapsedTime = 0;
 	
 	private boolean forward; // true if we're moving forward, false if backward
 	
@@ -29,9 +29,9 @@ public class ReversibleAnimation implements Animation {
 
 	@Override
 	public void update(long delta) {
-		deltaBuffer += delta;
-		while (deltaBuffer >= milliDelay) {
-			deltaBuffer -= milliDelay;
+		elapsedTime += delta;
+		while (elapsedTime >= milliDelay) {
+			elapsedTime -= milliDelay;
 			currentFrame = forward ? Math.min(imgs.length-1, currentFrame+1) : Math.max(0, currentFrame-1);
 		}
 		
