@@ -24,7 +24,7 @@ public class ButtonFactory {
 		
 		for (int i = 0; i < sheet.length; i++) { 
 			BufferedImage img = sheet[i];
-			SlicedImage slice = new SlicedImage(img, 8, 24, 40, 25);
+			SlicedImage slice = new SlicedImage(img, 23, 23, 25, 25);
 			
 			BufferedImage bgImg = slice.render(width, height); // because we don't include the outer edges
 			
