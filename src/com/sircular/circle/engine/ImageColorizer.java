@@ -14,10 +14,10 @@ public class ImageColorizer {
 		g2.setComposite(AlphaComposite.Clear);
 		g2.fillRect(0, 0, image.getWidth(), image.getHeight());
 		
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, color.getAlpha()/255f));
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, color.getAlpha()/255f)); // transparency stuff
 		g2.drawImage(image, 0, 0, null);
 		
-		Color opColor = new Color((color.getRGB() & 0x00FFFFFF) | 0xFF000000); // sets the alpha using bit transforms
+		Color opColor = new Color(color.getRGB() | 0xFF000000); // sets the alpha using bit transforms
 		g2.setColor(opColor);
 		g2.setComposite(AlphaComposite.SrcAtop);
 		g2.fillRect(0, 0, image.getWidth(), image.getHeight());
