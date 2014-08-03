@@ -1,9 +1,9 @@
 package com.sircular.circle.levels.extra.entities;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -45,14 +45,15 @@ public class TestPlatform extends ActiveCollidable {
 	}
 
 	@Override
-	public Dimension getSize() {
-		return new Dimension(image.getWidth(), image.getHeight());
-	}
-
-	@Override
 	public void draw(Graphics2D g2, Camera cam) {
 		Point frame = cam.getFramePosition();
 		g2.drawImage(image, (int)x-image.getWidth()/2-frame.x, (int)y-image.getHeight()/2-frame.y, null);		
+	}
+
+	@Override
+	public Area getCollisionShape() {
+		return new Area(new Rectangle((int)x-image.getWidth()/2, (int)y-image.getHeight()/2, image.getWidth(), image.getHeight()));
+
 	}
 	
 	

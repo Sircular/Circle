@@ -1,6 +1,5 @@
 package com.sircular.circle.levels.extra.entities;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Area;
@@ -8,41 +7,39 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 import com.sircular.circle.engine.ImageLoader;
+import com.sircular.circle.engine.animation.Animation;
+import com.sircular.circle.engine.animation.FrameLoopAnimation;
 import com.sircular.circle.levels.extra.Camera;
 import com.sircular.circle.levels.extra.Collidable;
 
 public class Goal extends Collidable {
 	
-	private BufferedImage[] imgs;
+	/*private BufferedImage[] imgs;
 	private int frame;
-	
+	*/
 	private final int FPS = 10;
-	private int milliDelay;
+	/*private int milliDelay;
 	
-	private int timeUntilNextFrame;
+	private int timeUntilNextFrame;*/
+	
+	private Animation anim;
 	
 	public Goal (int x, int y) {
-		milliDelay = 1000/FPS;
-		frame = 0;
-		
 		this.x = x;
 		this.y = y;
 		
-		imgs = ImageLoader.loadSpriteSheet("/com/sircular/circle/data/assets/img/goal.png", 16, 16);
+		anim = new FrameLoopAnimation(ImageLoader.loadSpriteSheet("/com/sircular/circle/data/assets/img/goal.png", 16, 16), FPS);
 	}
 	
 	public void update(long delta) {
-		timeUntilNextFrame += (int)delta;
-		while (timeUntilNextFrame > milliDelay) {
-			timeUntilNextFrame -= milliDelay;
-			frame = (frame+1)%imgs.length;
-		}
+		anim.update(delta);
 	}
 	
 	@Override
 	public void draw(Graphics2D g2, Camera cam) {
 		Point fr = cam.getFramePosition();
-		g2.drawImage(imgs[frame], (int)x-(imgs[frame].getWidth()/2)-fr.x, (int)y-(imgs[frame].getHeight()/2)-fr.y, null);
+		BufferedImage img = anim.getImage();
+		g2.drawImage(img, (int)x-(img.getWidth()/2)-fr.x, (int)y-(img.getHeight()/2)-fr.y, null);
 	}
 	
 	@Override
@@ -52,11 +49,6 @@ public class Goal extends Collidable {
 	
 	public boolean isSolid() {
 		return false;
-	}
-
-	@Override
-	public Dimension getSize() {
-		return new Dimension(imgs[0].getWidth(), imgs[0].getHeight());
 	}
 
 }

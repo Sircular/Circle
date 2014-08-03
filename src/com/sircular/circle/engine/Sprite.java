@@ -1,6 +1,5 @@
 package com.sircular.circle.engine;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 import com.sircular.circle.levels.extra.Camera;
@@ -19,8 +18,6 @@ public abstract class Sprite {
 		this.x = x;
 		this.y = y;
 	}
-	
-	public abstract Dimension getSize();
 	
 	public void moveTo(int x, int y) {
 		this.x = x;

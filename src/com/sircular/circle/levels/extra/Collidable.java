@@ -1,6 +1,5 @@
 package com.sircular.circle.levels.extra;
 
-import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 
@@ -22,13 +21,7 @@ public abstract class Collidable extends Sprite {
 	}
 
 	
-	public Area getCollisionShape() {
-		Dimension dim = this.getSize();
-		int width = dim.width;
-		int height = dim.height;
-		// JAVA AWT, Y U NEED INTS??
-		return new Area(new Rectangle((int)this.x-(width/2), (int)this.y-(height/2), width, height));
-	}
+	public abstract Area getCollisionShape();
 	
 	public Side hasCollided(Area area, boolean inside) { // returns which side was hit, null if no collision occurred
 		Area area1 = this.getCollisionShape();

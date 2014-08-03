@@ -1,8 +1,9 @@
 package com.sircular.circle.levels.extra.entities;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -36,16 +37,16 @@ public class Sign extends Collidable {
 	public boolean isSolid() {
 		return false;
 	}
-
-	@Override
-	public Dimension getSize() {
-		return new Dimension(image.getWidth(), image.getHeight());
-	}
-
+	
 	@Override
 	public void draw(Graphics2D g2, Camera cam) {
 		Point frame = cam.getFramePosition();
 		g2.drawImage(this.image, (int)this.x-image.getWidth()/2-frame.x, (int)this.y-image.getHeight()/2-frame.y, null);
+	}
+
+	@Override
+	public Area getCollisionShape() {
+		return new Area(new Rectangle((int)x-image.getWidth()/2, (int)y-image.getHeight()/2, image.getWidth(), image.getHeight()));
 	}
 
 }

@@ -194,9 +194,4 @@ public class Player extends Collidable {
 		g2.drawImage(TextRenderer.renderText((int)(this.x/MapLoader.TILE_SIZE)+", "+(int)(this.y/MapLoader.TILE_SIZE), 1), 48, 48, null);
 	}
 
-	@Override
-	public Dimension getSize() {
-		return new Dimension(image.getWidth(), image.getHeight());
-	}
-
 }
