@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import com.sircular.circle.engine.ImageLoader;
 import com.sircular.circle.engine.animation.Animation;
+import com.sircular.circle.engine.animation.CrossfadeAnimation;
 import com.sircular.circle.engine.animation.FrameLoopAnimation;
 import com.sircular.circle.levels.extra.Camera;
 import com.sircular.circle.levels.extra.Collidable;
@@ -17,7 +18,7 @@ public class Goal extends Collidable {
 	/*private BufferedImage[] imgs;
 	private int frame;
 	*/
-	private final int FPS = 10;
+	private final int FPS = 2; // because we have a crossfader taking care of it
 	/*private int milliDelay;
 	
 	private int timeUntilNextFrame;*/
@@ -28,7 +29,7 @@ public class Goal extends Collidable {
 		this.x = x;
 		this.y = y;
 		
-		anim = new FrameLoopAnimation(ImageLoader.loadSpriteSheet("/com/sircular/circle/data/assets/img/goal.png", 16, 16), FPS);
+		anim = new CrossfadeAnimation(ImageLoader.loadSpriteSheet("/com/sircular/circle/data/assets/img/goal.png", 16, 16), 1000/FPS);
 	}
 	
 	public void update(long delta) {
