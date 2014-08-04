@@ -3,7 +3,9 @@ package com.sircular.circle.menus;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
+import com.sircular.circle.engine.ImageLoader;
 import com.sircular.circle.engine.StateEngine;
 import com.sircular.circle.engine.TextRenderer;
 import com.sircular.circle.levels.KeyTestLevel;
@@ -16,12 +18,15 @@ public class Menu1 extends MenuClass {
 	public Menu1(StateEngine engine, MainMenu menu, int width, int height) {
 		super(engine, menu, width, height);
 		
-		buttons = new Button[4];
+		buttons = new Button[5];
 		buttons[0] = ButtonFactory.createTextButton(this, 0, width/2, 200, 400, "Play");
 		buttons[1] = ButtonFactory.createTextButton(this, 1, width/2, 264, 400, "Next Menu");
 		buttons[2] = ButtonFactory.createTextButton(this, 3, width/2, 328, 400, "Keyboard Test");
 		buttons[3] = ButtonFactory.createTextButton(this, 2, width/2, 392, 400, "Quit");
-		// TODO Auto-generated constructor stub
+		
+		// image button test (Knife Party logo, hehe)
+		BufferedImage logo = ImageLoader.loadImage("/com/sircular/circle/data/assets/img/logo_test.png");
+		buttons[4] = ButtonFactory.createImageButton(this, 4, width/2-(240), 200, 48, 48, logo, true);
 	}
 
 	@Override

@@ -7,6 +7,16 @@ import javax.imageio.ImageIO;
 
 public class ImageLoader {
 	
+	public static BufferedImage loadImage(String path) { // try/catches are annoying sometimes
+		try {
+			return ImageIO.read(ImageLoader.class.getResource(path));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static BufferedImage[] loadSpriteSheet(String path, int tileWidth, int tileHeight) {
 		try {
 			BufferedImage raw = ImageIO.read(ImageLoader.class.getResource(path));
