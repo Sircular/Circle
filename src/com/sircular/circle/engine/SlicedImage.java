@@ -1,6 +1,7 @@
 package com.sircular.circle.engine;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class SlicedImage {
@@ -28,21 +29,24 @@ public class SlicedImage {
 		
 		BufferedImage renderedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
+		Rectangle bounds = new Rectangle(slices[0].getWidth(), slices[0].getHeight(), 
+				width-(slices[0].getWidth()+slices[8].getWidth()), height-(slices[0].getHeight()+slices[8].getHeight()));
+		
 		Graphics g = renderedImage.getGraphics();
 		// draw the corners
 		g.drawImage(slices[0], 0, 0, null);
-		g.drawImage(slices[2], width-slices[2].getWidth(), 0, null);
-		g.drawImage(slices[6], 0, height-slices[6].getHeight(), null);
-		g.drawImage(slices[8], width-slices[8].getWidth(), height-slices[6].getHeight(), null);
+		g.drawImage(slices[2], (int)bounds.getMaxX(), 0, null);
+		g.drawImage(slices[6], 0, (int) bounds.getMaxY(), null);
+		g.drawImage(slices[8], (int)bounds.getMaxX(), (int)bounds.getMaxY(), null);
 		
 		// draw the edges
-		g.drawImage(renderTiledSection(slices[1], width-(slices[0].getWidth()+slices[8].getWidth()), slices[0].getHeight()), slices[0].getWidth(), 0, null);
-		g.drawImage(renderTiledSection(slices[7], width-(slices[0].getWidth()+slices[8].getWidth()), slices[8].getHeight()), slices[0].getWidth(), height-slices[8].getHeight(), null);
-		g.drawImage(renderTiledSection(slices[3], slices[0].getWidth(), height-(slices[0].getHeight()+slices[8].getHeight())), 0, slices[0].getHeight(), null);
-		g.drawImage(renderTiledSection(slices[5], slices[8].getWidth(), height-(slices[0].getHeight()+slices[8].getHeight())), width-slices[0].getWidth(), slices[0].getHeight(), null);
+		g.drawImage(renderTiledSection(slices[1], (int)bounds.width, (int)bounds.getMinY()), (int)bounds.getMinX(), 0, null);
+		g.drawImage(renderTiledSection(slices[7], (int)bounds.width, height-(int)bounds.getMaxY()), (int)bounds.getMinX(), (int)bounds.getMaxY(), null);
+		g.drawImage(renderTiledSection(slices[3], (int)bounds.getMinX(), bounds.height), 0, (int)bounds.getMinY(), null);
+		g.drawImage(renderTiledSection(slices[5], width-(int)bounds.getMaxX(), bounds.height), (int)bounds.getMaxX(), (int)bounds.getMinX(), null);
 		
 		// draw the center
-		g.drawImage(renderTiledSection(slices[4], width-(slices[0].getWidth()+slices[8].getWidth()), height-(slices[0].getHeight()+slices[8].getHeight())), slices[0].getWidth(), slices[0].getHeight(), null);
+		g.drawImage(renderTiledSection(slices[4], bounds.width, bounds.height), (int)bounds.getMinX(), (int)bounds.getMinY(), null);
 		
 		return renderedImage;
 	}
