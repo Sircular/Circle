@@ -29,6 +29,11 @@ public class ReversibleAnimation implements Animation {
 
 	@Override
 	public void update(long delta) {
+		if ((forward && currentFrame >= imgs.length-1) || (!forward && currentFrame <= 0)) {
+			elapsedTime = 0;
+			return;
+		}
+		
 		elapsedTime += delta;
 		while (elapsedTime >= milliDelay) {
 			elapsedTime -= milliDelay;
