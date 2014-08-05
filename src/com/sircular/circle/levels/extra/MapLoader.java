@@ -15,6 +15,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.sircular.circle.engine.ImageLoader;
+import com.sircular.circle.levels.extra.entities.ExpandingPlatform;
 import com.sircular.circle.levels.extra.entities.Goal;
 import com.sircular.circle.levels.extra.entities.Sign;
 import com.sircular.circle.levels.extra.entities.TestPlatform;
@@ -37,6 +38,7 @@ public class MapLoader {
 	
 	private static enum EntityType {
 		platform,
+		eplatform,
 		sign,
 		goal
 	}
@@ -133,6 +135,9 @@ public class MapLoader {
 				Goal goal = new Goal(objX, objY);
 				entities.add(goal);
 				break;
+			case eplatform:
+				ExpandingPlatform eplatform = new ExpandingPlatform(objX, objY);
+				entities.add(eplatform);
 			}
 			
 			

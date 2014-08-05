@@ -28,9 +28,14 @@
 	"text":"This is a third (and final) sign."
 	},
 	{
-	"type":"goal",,
+	"type":"goal",
 	"tile_x":38,
 	"tile_y":9
+	}
+	{
+	"type":"eplatform",
+	"tile_x":18,
+	"tile_y":7
 	}
 ]
 }

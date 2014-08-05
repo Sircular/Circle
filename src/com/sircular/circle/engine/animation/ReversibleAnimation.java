@@ -4,13 +4,13 @@ import java.awt.image.BufferedImage;
 
 public class ReversibleAnimation implements Animation {
 	
-	private BufferedImage[] imgs;
-	private int currentFrame = 0;
+	protected BufferedImage[] imgs;
+	protected int currentFrame = 0;
 	
-	private int milliDelay;
-	private int elapsedTime = 0;
+	protected int milliDelay;
+	protected int elapsedTime = 0;
 	
-	private boolean forward; // true if we're moving forward, false if backward
+	protected boolean forward; // true if we're moving forward, false if backward
 	
 	
 	public ReversibleAnimation(BufferedImage[] imgs, int fps, boolean forward) {
