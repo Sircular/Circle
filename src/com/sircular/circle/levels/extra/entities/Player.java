@@ -138,14 +138,23 @@ public class Player extends Collidable {
 		if (side == null)
 			return;
 		
-		Rectangle box = area.getBounds();
+		Rectangle wholeBox = area.getBounds();
+		Area interArea = this.getCollisionArea();
+		interArea.intersect(area);
+		Rectangle interBox = interArea.getBounds();
+		Rectangle thisBox = this.getCollisionArea().getBounds();
+		
+		// if this is false, it means that we are entirely inside the shape, and this will be useless
+		boolean useInter = !(thisBox.width == interBox.width & thisBox.height == interBox.height);
 		
 		if (side == Side.TOP) {
 			this.yvel = MathUtils.setSign(this.yvel*BOUNCINESS, -1)*delta;
 			this.xvel *= FRICTION;
 			this.rotvel = (xvel)/20f;
 			
-			this.y = (float) (box.getMinY()-(this.image.getHeight()/2));
+			this.y = useInter ?
+					(float) (interBox.getMinY()-thisBox.height/2f) :
+					(float) (wholeBox.getMinY()-thisBox.height/2f);
 			// we can jump, because we're on the floor
 			canJump = true;
 		} else if (side == Side.BOTTOM) {
@@ -153,19 +162,25 @@ public class Player extends Collidable {
 			this.xvel *= FRICTION;
 			this.rotvel = (xvel)/-20f;
 			
-			this.y =  (float) (box.getMaxY()+(this.image.getHeight()/2));
+			this.y = useInter ?
+					(float) (interBox.getMaxY()+thisBox.getHeight()/2f) :
+					(float) (wholeBox.getMaxY()+thisBox.getHeight()/2f);
 		} else if (side == Side.LEFT) {
 			this.xvel = MathUtils.setSign(this.xvel*BOUNCINESS, -1)*delta;
 			this.yvel *= FRICTION;
 			this.rotvel = (yvel)/-20f;
 			
-			this.x = (float) (box.getMinX()-(this.image.getWidth()/2));
+			this.x = useInter ?
+					(float) (interBox.getMinX()-thisBox.width/2f) :
+					(float) (wholeBox.getMinX()-thisBox.width/2f);
 		} else if (side == Side.RIGHT) {
 			this.xvel = MathUtils.setSign(this.xvel*BOUNCINESS, 1)*delta;
 			this.yvel *= FRICTION; 
 			this.rotvel =(yvel)/20f;
 			
-			this.x = (float) (box.getMaxX()+(this.image.getWidth()/2));
+			this.x = useInter ?
+					(float) (interBox.getMaxX()+thisBox.width/2f) :
+					(float) (wholeBox.getMaxX()+thisBox.width/2f);
 		}
 	}
 	
