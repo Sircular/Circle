@@ -122,20 +122,20 @@ public class MainLevel extends GameState {
 			}
 		}
 		
-		g2.setColor(Color.RED);
+		/*g2.setColor(Color.RED);
 		
 		for (Rectangle box : map.getCollisionBoxes()) {
 			g2.drawRect(box.x-frame.x, box.y-frame.y, box.width, box.height);
-		}
+		}*/
 		
 		for (Collidable sprite : entities) {
 			sprite.draw(g2, camera);
-			g2.draw(sprite.getCollisionArea().createTransformedArea(AffineTransform.getTranslateInstance(-frame.x, -frame.y)));
+			//g2.draw(sprite.getCollisionArea().createTransformedArea(AffineTransform.getTranslateInstance(-frame.x, -frame.y)));
 		}
 		
 		player.draw(g2, camera);
 		
-		g2.draw(player.getCollisionArea().createTransformedArea(AffineTransform.getTranslateInstance(-frame.x, -frame.y)));
+		//g2.draw(player.getCollisionArea().createTransformedArea(AffineTransform.getTranslateInstance(-frame.x, -frame.y)));
 		
 		if (paused) {
 			g2.setColor(new Color(0, 0, 0, 128));
