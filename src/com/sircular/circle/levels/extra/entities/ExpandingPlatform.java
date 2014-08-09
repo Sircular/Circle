@@ -37,16 +37,16 @@ public class ExpandingPlatform extends ActiveCollidable {
 		}
 		
 		anim = new ReversibleCollidableAnimation(ImageLoader.loadSpriteSheet("/com/sircular//circle/data/assets/img/platform.png",
-				32, 64), collAreas, 2, false);
+				32, 64), collAreas, 30, false);
 	}
 	// we just need this for the delta
 	@Override
 	public void update(long delta, List<Rectangle> tiles,
 			List<Collidable> entities) {
 		timeLeft += delta;
-		if (timeLeft >= 8000) { // every four seconds
+		if (timeLeft >= 2000) { // every four seconds
 			anim.setMovingForward(!anim.getMovingForward());
-			timeLeft -= 8000;
+			timeLeft -= 2000;
 		}
 		anim.update(delta);
 		
