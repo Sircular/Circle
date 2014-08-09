@@ -50,26 +50,14 @@ public class SlicedImage {
 		g.drawImage(slices[BOTTOM_RIGHT], (int)bounds.getMaxX(), (int)bounds.getMaxY(), null);
 		
 		// draw the edges
-		g.drawImage(renderTiledSection(slices[TOP_CENTER], (int)bounds.width, (int)bounds.getMinY()), (int)bounds.getMinX(), 0, null);
-		g.drawImage(renderTiledSection(slices[BOTTOM_CENTER], (int)bounds.width, height-(int)bounds.getMaxY()), (int)bounds.getMinX(), (int)bounds.getMaxY(), null);
-		g.drawImage(renderTiledSection(slices[CENTER_LEFT], (int)bounds.getMinX(), bounds.height), 0, (int)bounds.getMinY(), null);
-		g.drawImage(renderTiledSection(slices[CENTER_RIGHT], width-(int)bounds.getMaxX(), bounds.height), (int)bounds.getMaxX(), (int)bounds.getMinX(), null);
+		g.drawImage(ImageTransform.tileImage(slices[TOP_CENTER], (int)bounds.width, (int)bounds.getMinY()), (int)bounds.getMinX(), 0, null);
+		g.drawImage(ImageTransform.tileImage(slices[BOTTOM_CENTER], (int)bounds.width, height-(int)bounds.getMaxY()), (int)bounds.getMinX(), (int)bounds.getMaxY(), null);
+		g.drawImage(ImageTransform.tileImage(slices[CENTER_LEFT], (int)bounds.getMinX(), bounds.height), 0, (int)bounds.getMinY(), null);
+		g.drawImage(ImageTransform.tileImage(slices[CENTER_RIGHT], width-(int)bounds.getMaxX(), bounds.height), (int)bounds.getMaxX(), (int)bounds.getMinX(), null);
 		
 		// draw the center
-		g.drawImage(renderTiledSection(slices[CENTER], bounds.width, bounds.height), (int)bounds.getMinX(), (int)bounds.getMinY(), null);
+		g.drawImage(ImageTransform.tileImage(slices[CENTER], bounds.width, bounds.height), (int)bounds.getMinX(), (int)bounds.getMinY(), null);
 		
-		return renderedImage;
-	}
-	
-	private BufferedImage renderTiledSection(BufferedImage img, int width, int height) {
-		BufferedImage renderedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		Graphics g = renderedImage.getGraphics();
-		
-		for (int x = 0; x < Math.ceil(width/(float)img.getWidth()); x++) {
-			for (int y = 0; y < Math.ceil(height/(float)img.getHeight()); y++) {
-				g.drawImage(img, x*img.getWidth(), y*img.getHeight(), null);
-			}
-		}
 		return renderedImage;
 	}
 

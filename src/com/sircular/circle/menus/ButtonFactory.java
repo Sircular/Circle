@@ -3,7 +3,7 @@ package com.sircular.circle.menus;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import com.sircular.circle.engine.ImageColorizer;
+import com.sircular.circle.engine.ImageTransform;
 import com.sircular.circle.engine.ImageLoader;
 import com.sircular.circle.engine.SlicedImage;
 import com.sircular.circle.engine.TextRenderer;
@@ -29,7 +29,7 @@ public class ButtonFactory {
 			BufferedImage bgImg = slice.render(width, height); // because we don't include the outer edges
 			
 			if (shadow) {
-				BufferedImage shadowImg = ImageColorizer.colorizeImage(image, new Color(0, 0, 0, 128));
+				BufferedImage shadowImg = ImageTransform.colorizeImage(image, new Color(0, 0, 0, 128));
 				bgImg.getGraphics().drawImage(shadowImg, 3+(bgImg.getWidth()-image.getWidth())/2,
 						3+(bgImg.getHeight()-image.getHeight())/2, null);
 			}

@@ -44,7 +44,7 @@ public class TextRenderer {
 			g2.drawImage(glyph, i*glyphWidth*scale, 0, glyphWidth*scale, glyphHeight*scale, null);
 		}
 		
-		return ImageColorizer.colorizeImage(renderedImg, col);
+		return ImageTransform.colorizeImage(renderedImg, col);
 	}
 	
 	
