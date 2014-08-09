@@ -2,8 +2,10 @@ package com.sircular.circle.engine;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ public class Mouse {
 	public static int y;
 	
 	private static Map<Integer, Boolean> buttonMap = new HashMap<Integer, Boolean>();
-	private static List<InputListener> listeners = new ArrayList<InputListener>();
+	private static List<WeakReference<InputListener>> listeners = new ArrayList<WeakReference<InputListener>>();
 	
 	public static final int LEFT_BUTTON = MouseEvent.BUTTON1;
 	public static final int MIDDLE_BUTTON = MouseEvent.BUTTON2;
@@ -27,8 +29,10 @@ public class Mouse {
 		if (x == newX && y == newY)
 			return;
 		
-		for (InputListener listener : listeners)
+		for (WeakReference<InputListener> ref : listeners) {
+			InputListener listener = ref.get();
 			listener.mouseMoved(newX, newY);
+		}
 		
 		x = newX;
 		y = newY;
@@ -38,7 +42,8 @@ public class Mouse {
 		if (isButtonDown(code) == value)
 			return;
 		
-		for (InputListener listener : listeners) {
+		for (WeakReference<InputListener> ref : listeners) {
+			InputListener listener = ref.get();
 			if (value)
 				listener.mousePressed(code);
 			else
@@ -53,11 +58,18 @@ public class Mouse {
 	}
 	
 	public static void addListener(InputListener listener) {
-		listeners.add(listener);
+		listeners.add(new WeakReference<InputListener>(listener));
 	}
 	
 	public static void removeListener(InputListener listener) {
-		listeners.remove(listener);
+		Iterator<WeakReference<InputListener>> it = listeners.iterator();
+		
+		while(it.hasNext()) {
+			if (it.next().get() == listener) {
+				it.remove();
+				return;
+			}
+		}
 	}
 
 }
