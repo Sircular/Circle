@@ -10,11 +10,18 @@ import java.util.Map;
 public class TextRenderer {
 	
 	private static final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-_+=.,";
+	private static final String IMG_DIR = "/com/sircular/circle/data/assets/img/";
+	
+	private static final String DEFAULT_FONT = "text";
+	
+	private static final int GLYPH_WIDTH = 12;
+	private static final int GLYPH_HEIGHT = 14;
 	
 	private static int glyphWidth, glyphHeight;
 	private static Map<Character, BufferedImage> glyphs;
+	private static String currentFont = "";
 	
-	public static void loadFont(int glyphWidth, int glyphHeight, String imgPath) {
+	private static void loadFont(int glyphWidth, int glyphHeight, String imgPath) {
 		TextRenderer.glyphWidth = glyphWidth;
 		TextRenderer.glyphHeight = glyphHeight;
 		
@@ -27,12 +34,22 @@ public class TextRenderer {
 	}
 	
 	public static BufferedImage renderText(String text, int scale) {
-		return renderText(text, scale, Color.black);
+		return renderText(text, scale, Color.black, DEFAULT_FONT);
 	}
 	
 	public static BufferedImage renderText(String text, int scale, Color col) {
-		if (glyphs == null)
-			return null;
+		return renderText(text, scale, col, DEFAULT_FONT);
+	}
+	
+	public static BufferedImage renderText(String text, int scale, Color col, String fontName) {
+		if (fontName == null)
+			fontName = DEFAULT_FONT;
+		
+		if (!currentFont.equals(fontName)) {
+			loadFont(GLYPH_WIDTH, GLYPH_HEIGHT, IMG_DIR+fontName+".png");
+			currentFont = fontName;
+		}
+		
 		BufferedImage renderedImg = new BufferedImage(glyphWidth*text.length()*scale, glyphHeight*scale, BufferedImage.TYPE_INT_ARGB);
 		
 		Graphics2D g2 = (Graphics2D) renderedImg.getGraphics();

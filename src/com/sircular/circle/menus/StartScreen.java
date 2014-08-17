@@ -44,8 +44,11 @@ public class StartScreen extends MenuClass {
 		}
 		String noun = nounScan.next();
 		
+		nounScan.close();
+		adjScan.close();
+		
+		logo = TextRenderer.renderText(adj.charAt(0)+""+noun.charAt(0), 7, Color.white, "text-strike");
 		textImg = TextRenderer.renderText(adj+" "+noun+" Games", 2, Color.white);
-		logo = TextRenderer.renderText(adj.charAt(0)+""+noun.charAt(0), 7, Color.white);
 	}
 
 	@Override
