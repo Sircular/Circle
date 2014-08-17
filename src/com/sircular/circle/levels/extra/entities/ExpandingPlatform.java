@@ -36,7 +36,7 @@ public class ExpandingPlatform extends ActiveCollidable {
 			collAreas[i] = builder;
 		}
 		
-		anim = new ReversibleCollidableAnimation(ImageLoader.loadSpriteSheet("/com/sircular//circle/data/assets/img/platform.png",
+		anim = new ReversibleCollidableAnimation(ImageLoader.loadSpriteSheet("/com/sircular/circle/data/assets/img/platform.png",
 				32, 64), collAreas, 30, false);
 	}
 	// we just need this for the delta
