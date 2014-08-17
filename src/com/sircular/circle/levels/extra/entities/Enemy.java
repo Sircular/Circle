@@ -82,7 +82,6 @@ public class Enemy extends ActiveCollidable{
 	public boolean onCollide(Collidable other, Side side) {
 		boolean wasAlive = alive;
 		if (side == Side.TOP && other instanceof Player) {
-			System.out.println("DEAD!");
 			alive = false;
 		}
 		return wasAlive;

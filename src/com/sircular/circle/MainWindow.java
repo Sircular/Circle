@@ -17,6 +17,7 @@ import com.sircular.circle.engine.StateEngine;
 import com.sircular.circle.engine.TextRenderer;
 import com.sircular.circle.menus.MainMenu;
 import com.sircular.circle.menus.Menu1;
+import com.sircular.circle.menus.StartScreen;
 
 public class MainWindow extends JFrame implements KeyListener, FocusListener {
 
@@ -52,7 +53,7 @@ public class MainWindow extends JFrame implements KeyListener, FocusListener {
 		
 		engine = new StateEngine(this);
 		MainMenu level = new MainMenu(engine, width, height);
-		level.setMenu(new Menu1(engine, level, width, height));
+		level.setMenu(new StartScreen(engine, level, width, height));
 		engine.setState(level);
 		
 		Mouse.x = 0;
